@@ -2,21 +2,75 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Website HTML CSS JS</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARSIP SAYA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f4f4; font-family: sans-serif; }
+        .header-banner { background: #000; color: white; padding: 60px 0; text-align: center; background-image: url('https://via.placeholder.com/1200x300'); background-size: cover; }
+        .nav-custom { background-color: #1a237e; }
+        .nav-custom .nav-link { color: white; font-weight: bold; }
+        .card { border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card-title { font-size: 0.9rem; font-weight: bold; color: #1a237e; height: 40px; overflow: hidden; }
+        .tag-badge { font-size: 0.7rem; margin-right: 2px; background-color: #eee; color: #666; }
+        .footer-section { background: white; padding: 20px; margin-top: 30px; border-radius: 8px; }
+    </style>
 </head>
 <body>
 
-    <header>
-        <h1>Website Pertamaku</h1>
-        <p>HTML + CSS + JavaScript</p>
-    </header>
+    <div class="header-banner">
+        <h1>ARSIP SAYA</h1>
+        <div class="container mt-3">
+            <input type="text" class="form-control w-50 mx-auto" placeholder="Cari konten...">
+        </div>
+    </div>
 
-    <main>
-        <button id="btn">Klik Aku</button>
-        <p id="text"></p>
-    </main>
+    <nav class="navbar navbar-expand-lg nav-custom">
+        <div class="container">
+            <div class="navbar-nav">
+                <a class="nav-link" href="#">Tutorial</a>
+                <a class="nav-link" href="#">Request</a>
+                <a class="nav-link" href="#">Report Link</a>
+                <a class="nav-link" href="#">Support</a>
+            </div>
+        </div>
+    </nav>
 
-    <script src="js/script.js"></script>
+    <div class="container mt-4">
+        <div class="row row-cols-2 row-cols-md-5 g-3">
+            
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150x200" class="card-img-top" alt="Cover">
+                    <div class="card-body p-2 text-center">
+                        <p class="card-title">Judul Konten atau Game Kamu Disini</p>
+                        <span class="badge tag-badge">RPG</span>
+                        <span class="badge tag-badge">2D</span>
+                        <span class="badge tag-badge">Adventure</span>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </div>
+
+    <div class="container">
+        <div class="footer-section mt-5">
+            <h5>Discussion</h5>
+            <hr>
+            <div style="height: 200px; overflow-y: scroll; border: 1px solid #ddd; padding: 10px; background: #fafafa;">
+                <p><strong>User1:</strong> Keren min, update terus!</p>
+                <p><strong>Admin:</strong> Siap, laksanakan.</p>
+            </div>
+            <textarea class="form-control mt-2" placeholder="Tulis komentar..."></textarea>
+            <button class="btn btn-primary mt-2 btn-sm">Kirim</button>
+        </div>
+    </div>
+
+    <footer class="text-center p-4 mt-5">
+        &copy; 2024 Arsip Saya - GitHub Pages
+    </footer>
+
 </body>
 </html>
