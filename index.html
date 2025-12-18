@@ -3,74 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARSIP SAYA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.min.css" rel="stylesheet">
+    <title>ARSIP CAKMAN - Premium Gallery</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
-        body { background-color: #f4f4f4; font-family: sans-serif; }
-        .header-banner { background: #000; color: white; padding: 60px 0; text-align: center; background-image: url('https://via.placeholder.com/1200x300'); background-size: cover; }
-        .nav-custom { background-color: #1a237e; }
-        .nav-custom .nav-link { color: white; font-weight: bold; }
-        .card { border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card-title { font-size: 0.9rem; font-weight: bold; color: #1a237e; height: 40px; overflow: hidden; }
-        .tag-badge { font-size: 0.7rem; margin-right: 2px; background-color: #eee; color: #666; }
-        .footer-section { background: white; padding: 20px; margin-top: 30px; border-radius: 8px; }
+        :root {
+            --primary-color: #1a237e;
+            --accent-color: #ffd600;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body { 
+            background-color: #0f172a; 
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animasi Background Hero */
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://wallpaperaccess.com/full/1994829.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            transform: scale(1.05);
+        }
+
+        /* Navbar Sticky & Animated */
+        .nav-custom {
+            background: var(--primary-color);
+            border-bottom: 4px solid var(--accent-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-link {
+            color: white !important;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Card Animation */
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+            border-color: var(--accent-color);
+        }
+
+        .card img {
+            transition: 0.5s;
+            filter: brightness(0.8);
+        }
+
+        .card:hover img {
+            filter: brightness(1);
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #f8fafc;
+            margin-bottom: 10px;
+        }
+
+        .tag-badge {
+            font-size: 0.65rem;
+            background: #334155;
+            color: #cbd5e1;
+            padding: 4px 8px;
+            border-radius: 5px;
+            margin-bottom: 2px;
+            display: inline-block;
+        }
+
+        /* Discussion Box Glassmorphism */
+        .discussion-box {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--glass);
+        }
+
+        #chat-area {
+            height: 300px;
+            overflow-y: auto;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
     </style>
 </head>
 <body>
 
-    <div class="header-banner">
-        <h1>ARSIP SAYA</h1>
-        <div class="container mt-3">
-            <input type="text" class="form-control w-50 mx-auto" placeholder="Cari konten...">
+    <div class="hero-section">
+        <h1 data-aos="zoom-in" style="letter-spacing: 5px; font-weight: 800;">ARSIP CAKMAN</h1>
+        <div class="search-box p-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Cari konten favoritmu...">
+                <button class="btn btn-warning"><i class="fas fa-search"></i></button>
+            </div>
         </div>
     </div>
 
     <nav class="navbar navbar-expand-lg nav-custom">
-        <div class="container">
-            <div class="navbar-nav">
-                <a class="nav-link" href="#">Tutorial</a>
-                <a class="nav-link" href="#">Request</a>
-                <a class="nav-link" href="#">Report Link</a>
-                <a class="nav-link" href="#">Support</a>
+        <div class="container text-center">
+            <div class="navbar-nav mx-auto">
+                <a class="nav-link px-4" href="#"><i class="fas fa-book me-1"></i> Tutorial</a>
+                <a class="nav-link px-4" href="#"><i class="fas fa-upload me-1"></i> Request</a>
+                <a class="nav-link px-4" href="#"><i class="fas fa-exclamation-triangle me-1"></i> Report</a>
+                <a class="nav-link px-4" href="#"><i class="fas fa-heart me-1"></i> Support</a>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div class="row row-cols-2 row-cols-md-5 g-3">
+    <div class="container mt-5">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-4">
             
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://via.placeholder.com/150x200" class="card-img-top" alt="Cover">
-                    <div class="card-body p-2 text-center">
-                        <p class="card-title">Judul Konten atau Game Kamu Disini</p>
-                        <span class="badge tag-badge">RPG</span>
-                        <span class="badge tag-badge">2D</span>
-                        <span class="badge tag-badge">Adventure</span>
-                    </div>
-                </div>
-            </div>
+            <script>
+                for(let i=1; i<=10; i++) {
+                    document.write(`
+                        <div class="col" data-aos="fade-up" data-aos-delay="${i * 50}">
+                            <div class="card h-100">
+                                <img src="https://picsum.photos/seed/${i+20}/300/450" class="card-img-top" alt="Cover">
+                                <div class="card-body p-3 text-center">
+                                    <div class="card-title">Project Name #${i} - Full Animation</div>
+                                    <span class="tag-badge">RPG</span>
+                                    <span class="tag-badge">Unity</span>
+                                    <span class="tag-badge">Action</span>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
+            </script>
 
-            </div>
-    </div>
-
-    <div class="container">
-        <div class="footer-section mt-5">
-            <h5>Discussion</h5>
-            <hr>
-            <div style="height: 200px; overflow-y: scroll; border: 1px solid #ddd; padding: 10px; background: #fafafa;">
-                <p><strong>User1:</strong> Keren min, update terus!</p>
-                <p><strong>Admin:</strong> Siap, laksanakan.</p>
-            </div>
-            <textarea class="form-control mt-2" placeholder="Tulis komentar..."></textarea>
-            <button class="btn btn-primary mt-2 btn-sm">Kirim</button>
         </div>
     </div>
 
-    <footer class="text-center p-4 mt-5">
-        &copy; 2024 Arsip Saya - GitHub Pages
+    <div class="container my-5" data-aos="fade-right">
+        <div class="discussion-box">
+            <h4><i class="fas fa-comments text-warning me-2"></i>Global Discussion</h4>
+            <hr>
+            <div id="chat-area">
+                <p><span class="text-warning fw-bold">User_99:</span> Bang, update konten terbaru kapan?</p>
+                <p><span class="text-info fw-bold">Admin:</span> Malam ini ya, tunggu saja!</p>
+                <p><span class="text-warning fw-bold">Anonim:</span> Webnya keren banget animasinya.</p>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="Tulis pesan...">
+                <button class="btn btn-primary px-4">Kirim</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center p-5 text-secondary">
+        <p>&copy; 2024 Arsip Cakman - Hosted on GitHub Pages</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inisialisasi Animasi AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
 </body>
 </html>
