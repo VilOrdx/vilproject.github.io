@@ -3,46 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vil Ordx Translator</title>
+    <title>OrangGabut Clone</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/layout.css">
     <link rel="stylesheet" href="assets/css/components.css">
-    <link rel="stylesheet" href="assets/css/animations.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo">OrangGabut</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Cari game...">
+        <div class="nav-container">
+            <a href="#" class="logo">OrangGabut</a>
+            <div class="search-box">
+                <input type="text" placeholder="Cari game...">
+                <button>🔍</button>
+            </div>
         </div>
     </nav>
 
     <main class="container">
-        <div class="filter-section">
+        
+        <div class="filter-wrapper">
             <button class="filter-btn active">All Game</button>
             <button class="filter-btn">Android/APK</button>
             <button class="filter-btn">PC Game</button>
         </div>
 
+        <h2 class="section-title">Daftar Game</h2>
+
         <div class="game-grid">
-            <article class="game-card fade-in">
+            
+            <article class="game-card">
                 <div class="card-image">
-                    <img src="path-to-image.jpg" alt="Game Cover">
-                    <span class="badge">Update</span>
+                    <img src="https://placehold.co/600x400/1e293b/FFF?text=Game+Cover+1" alt="Game Cover">
+                    <span class="badge">Hot</span>
                 </div>
                 <div class="card-content">
-                    <h3>Nama Game Disini</h3>
                     <div class="tags">
-                        <span>RPG</span><span>Anime</span>
+                        <span class="tag">RPG</span>
+                        <span class="tag">Anime</span>
                     </div>
-                    <a href="details.html" class="btn-download">Lihat Detail</a>
+                    <h3>Shy Mio-chan and the Milking Life</h3>
+                    <a href="details.html" class="btn-detail">Lihat Detail</a>
+                    <a href="#" class="btn-download">Download</a>
                 </div>
             </article>
-            </div>
+
+            <article class="game-card">
+                <div class="card-image">
+                    <img src="https://placehold.co/600x400/0f172a/FFF?text=Game+Cover+2" alt="Game Cover">
+                    <span class="badge update">Update</span>
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span class="tag">Action</span>
+                        <span class="tag">3D</span>
+                    </div>
+                    <h3>Old Professor x1.0</h3>
+                    <a href="details.html" class="btn-detail">Lihat Detail</a>
+                    <a href="#" class="btn-download">Download</a>
+                </div>
+            </article>
+
+             <article class="game-card">
+                <div class="card-image">
+                    <img src="https://placehold.co/600x400/334155/FFF?text=Game+Cover+3" alt="Game Cover">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span class="tag">Sim</span>
+                    </div>
+                    <h3>Summer Memories</h3>
+                    <a href="details.html" class="btn-detail">Lihat Detail</a>
+                    <a href="#" class="btn-download">Download</a>
+                </div>
+            </article>
+
+        </div>
     </main>
 
-    <script src="assets/js/main.js"></script>
 </body>
 </html>
