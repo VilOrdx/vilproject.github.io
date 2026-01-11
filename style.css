@@ -198,3 +198,17 @@ h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to righ
     grid-column: 1 / -1;
     padding: 40px;
 }
+
+.download-box .play-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px; /* Jarak antar tombol */
+    text-decoration: none;
+}
+
+/* Menghilangkan margin pada tombol terakhir agar tidak terlalu jauh ke bawah */
+.download-box .play-btn:last-child {
+    margin-bottom: 0;
+}
