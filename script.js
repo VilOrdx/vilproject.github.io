@@ -15,7 +15,7 @@ const games = [
         downloadAndroid: "https://link-download-android.com"
     },
     {
-        id: 1,
+        id: 2,
         title: "KEinsdfat",
         genre: "Action",
         releaseDate: "20 Mei 2024",
@@ -29,7 +29,7 @@ const games = [
         downloadAndroid: "https://link-download-android.com"
     },
     {
-        id: 2,
+        id: 3,
         title: "Galaxy Raiders",
         genre: "RPG",
         releaseDate: "25 Juni 2024",
@@ -39,7 +39,7 @@ const games = [
         isHot: true,
         desc: "Jelajahi galaksi dan kalahkan monster alien dalam RPG turn-based ini...",
         image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
-        downloadWindows: null, 
+        downloadWindows: "https://link-download-android.com", 
         downloadAndroid: "https://link-download-android.com"
     }
 ];
