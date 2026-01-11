@@ -217,11 +217,14 @@ function showDetail(gameId) {
                     </div>
                     
                     <div class="download-box">
-                        <p style="margin-bottom: 15px; font-size: 0.9rem; font-weight: bold; color: white;">
-                            UNDUH GAME SEKARANG:
-                        </p>
-                        ${game.downloadWindows ? `<a href="${game.downloadWindows}" target="_blank" class="btn-dl btn-windows">Download for Windows</a>` : ''}
-                        ${game.downloadAndroid ? `<a href="${game.downloadAndroid}" target="_blank" class="btn-dl btn-android">Download for Android</a>` : ''}
+                        ${game.downloadWindows ? `
+                            <a href="${game.downloadWindows}" target="_blank" class="btn-dl btn-windows">
+                                <i class="fab fa-windows"></i> Windows
+                            </a>` : ''}
+                        ${game.downloadAndroid ? `
+                            <a href="${game.downloadAndroid}" target="_blank" class="btn-dl btn-android">
+                                <i class="fab fa-android"></i> Android
+                            </a>` : ''}
                     </div>
                 </div>
             </div>
