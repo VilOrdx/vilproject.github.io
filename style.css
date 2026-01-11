@@ -461,3 +461,25 @@ h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to righ
     .hero-slider { height: 350px; }
     .slide-content h2 { font-size: 2rem; }
 }
+
+/* Navigasi Panah */
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    z-index: 100;
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+.slider-nav:hover { background: var(--accent); color: black; }
+.prev { left: 20px; border-radius: 0 5px 5px 0; }
+.next { right: 20px; border-radius: 5px 0 0 5px; }
+
+/* Tambahan agar slider support drag (opsional untuk sentuhan) */
+.slides-container { cursor: grab; }
+.slides-container:active { cursor: grabbing; }
