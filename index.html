@@ -3,235 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameVault - Koleksi Game Saya</title>
+    <title>GameVault | Portfolio</title>
     <style>
-        /* --- 1. CSS (TAMPILAN) --- */
         :root {
-            --bg-color: #0f0f13;
-            --card-bg: #1a1a24;
+            --bg-color: #0b0b0f;
+            --card-bg: #16161f;
             --text-main: #ffffff;
-            --text-sec: #a0a0b0;
-            --accent: #8c52ff; /* Ungu Neon */
-            --accent-hover: #6a00ff;
+            --text-sec: #94a3b8;
+            --accent: #00f2ff; /* Cyan Neon */
+            --accent-purple: #8c52ff;
+            --new-tag: #22c55e;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
         
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding-bottom: 50px;
-        }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
 
-        /* Header */
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(180deg, rgba(140,82,255,0.1) 0%, rgba(15,15,19,0) 100%);
-        }
-
-        h1 { font-size: 3rem; margin-bottom: 10px; letter-spacing: 2px; }
-        p.subtitle { color: var(--text-sec); font-size: 1.2rem; }
-
-        /* Filter Buttons */
-        .filter-container {
+        /* --- NAVBAR --- */
+        nav {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(11, 11, 15, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
+        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; color: var(--accent); }
+
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-sec); font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        .btn-donate {
+            background: var(--accent-purple);
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            box-shadow: 0 0 15px rgba(140, 82, 255, 0.4);
+        }
+
+        /* --- HERO --- */
+        header { text-align: center; padding: 80px 20px 40px; }
+        h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #fff, #8c52ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- FILTER --- */
+        .filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
         .filter-btn {
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--text-main);
-            padding: 10px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
+            background: #1e1e26; border: none; color: var(--text-sec);
+            padding: 8px 20px; border-radius: 8px; cursor: pointer; transition: 0.3s;
         }
+        .filter-btn.active { background: var(--accent); color: #000; font-weight: bold; }
 
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--accent);
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        /* Grid Layout */
+        /* --- GRID & CARDS --- */
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
         }
 
-        /* Game Card Design */
         .game-card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.05);
-            opacity: 0; /* Untuk animasi fade-in */
-            animation: fadeIn 0.6s forwards;
+            background: var(--card-bg); border-radius: 16px; overflow: hidden;
+            position: relative; border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-color: var(--accent);
-        }
+        .game-card:hover { transform: translateY(-8px); border-color: var(--accent); }
 
-        .card-img {
-            width: 100%;
-            height: 180px;
-            background-color: #333;
-            object-fit: cover;
+        .image-container { position: relative; width: 100%; height: 190px; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Label Update/New */
+        .badge-new {
+            position: absolute; top: 12px; left: 12px;
+            background: var(--new-tag); color: #000; font-size: 0.7rem;
+            font-weight: 800; padding: 4px 10px; border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .card-content { padding: 20px; }
+        .card-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .genre-tag { color: var(--accent); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .post-date { color: var(--text-sec); font-size: 0.75rem; }
 
-        .genre-badge {
-            background-color: rgba(140,82,255,0.2);
-            color: #bd9eff;
-            padding: 4px 12px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .game-title { font-size: 1.5rem; margin-bottom: 10px; }
-        .game-desc { color: var(--text-sec); font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; }
+        .game-title { font-size: 1.4rem; margin-bottom: 8px; }
+        .game-desc { color: var(--text-sec); font-size: 0.9rem; margin-bottom: 20px; height: 4.5em; overflow: hidden; }
 
         .play-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: 0.2s;
+            display: block; width: 100%; text-align: center;
+            background: transparent; border: 1px solid var(--accent); color: var(--accent);
+            padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600;
+            transition: 0.3s;
         }
+        .play-btn:hover { background: var(--accent); color: #000; }
 
-        .play-btn:hover { background-color: var(--accent-hover); }
+        /* --- MODAL DONASI --- */
+        .modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--card-bg); padding: 40px; border-radius: 20px;
+            max-width: 400px; text-align: center; border: 1px solid var(--accent-purple);
+        }
+        .close-modal { margin-top: 20px; cursor: pointer; color: var(--text-sec); display: block; }
 
-        /* Animation Keyframes */
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        .game-card { animation: fadeInUp 0.5s ease forwards; }
     </style>
 </head>
 <body>
 
+    <nav>
+        <div class="logo">GAME<span style="color:white">VAULT</span></div>
+        <div class="nav-links">
+            <a href="#">Games</a>
+            <a href="#">Updates</a>
+            <a href="javascript:void(0)" class="btn-donate" onclick="toggleModal()">Donate ☕</a>
+        </div>
+    </nav>
+
     <header>
-        <h1>GAME VAULT</h1>
-        <p class="subtitle">Mainkan koleksi game indie terbaik buatan saya.</p>
+        <h1>My Game Collection</h1>
+        <p style="color: var(--text-sec)">Eksplorasi proyek game terbaru saya</p>
     </header>
 
     <div class="filter-container">
-        <button class="filter-btn active" onclick="filterGames('all')">All</button>
-        <button class="filter-btn" onclick="filterGames('Action')">Action</button>
-        <button class="filter-btn" onclick="filterGames('RPG')">RPG</button>
-        <button class="filter-btn" onclick="filterGames('Puzzle')">Puzzle</button>
+        <button class="filter-btn active" onclick="filterGames('all', this)">All Games</button>
+        <button class="filter-btn" onclick="filterGames('Action', this)">Action</button>
+        <button class="filter-btn" onclick="filterGames('RPG', this)">RPG</button>
     </div>
 
     <div class="game-grid" id="gameContainer">
         </div>
 
+    <div class="modal" id="donateModal">
+        <div class="modal-content">
+            <h2>Support My Work ☕</h2>
+            <p style="color: var(--text-sec); margin: 15px 0;">Terima kasih sudah ingin membantu pengembangan game saya!</p>
+            <p><strong>Trakteer / Saweria:</strong><br> @usernamekamu</p>
+            <span class="close-modal" onclick="toggleModal()">Tutup</span>
+        </div>
+    </div>
+
     <script>
-        /* --- 2. JAVASCRIPT (LOGIKA & DATA) --- */
-        
-        // DATA GAME (Edit bagian ini untuk menambah game baru)
         const games = [
             {
-                title: "Cyber Rush",
+                title: "Neon Knight",
                 genre: "Action",
-                desc: "Game lari tanpa henti di dunia cyberpunk. Hindari rintangan neon dan kumpulkan koin crypto!",
-                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=500&q=80",
+                date: "2024-05-20",
+                isNew: true,
+                desc: "Pertempuran pedang di masa depan yang penuh dengan lampu neon.",
+                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&q=80",
                 link: "#"
             },
             {
-                title: "Forest Mystery",
+                title: "Pixel Quest",
                 genre: "RPG",
-                desc: "Jelajahi hutan terlarang dan temukan rahasia kuno yang terkubur selama ribuan tahun.",
-                image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=80",
+                date: "2024-04-15",
+                isNew: false,
+                desc: "RPG klasik bergaya 8-bit dengan cerita yang mendalam dan quest unik.",
+                image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=500&q=80",
                 link: "#"
             },
             {
-                title: "Block Breaker",
-                genre: "Puzzle",
-                desc: "Hancurkan balok dengan strategi. Semakin tinggi level, semakin sulit tantangannya.",
-                image: "https://images.unsplash.com/photo-1605218427360-36390f8555e9?auto=format&fit=crop&w=500&q=80",
-                link: "#"
-            },
-            {
-                title: "Space Warrior",
+                title: "Shadow Runner",
                 genre: "Action",
-                desc: "Pertahankan galaksi dari serangan alien. Tembak musuh dan upgrade pesawatmu.",
-                image: "https://images.unsplash.com/photo-1614720368849-3e16221b5312?auto=format&fit=crop&w=500&q=80",
-                link: "#"
-            },
-             {
-                title: "Dungeon Souls",
-                genre: "RPG",
-                desc: "Roguelike RPG dengan sistem loot yang acak dan musuh yang menantang.",
-                image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=500&q=80",
+                date: "2024-05-25",
+                isNew: true,
+                desc: "Lari secepat mungkin melewati bayangan musuh tanpa terdeteksi.",
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&q=80",
                 link: "#"
             }
         ];
 
-        const container = document.getElementById('gameContainer');
-        const buttons = document.querySelectorAll('.filter-btn');
-
-        // Fungsi untuk menampilkan game
         function displayGames(category) {
-            container.innerHTML = ''; // Kosongkan isi dulu
-            
-            // Filter data
-            const filteredGames = category === 'all' 
-                ? games 
-                : games.filter(game => game.genre === category);
+            const container = document.getElementById('gameContainer');
+            container.innerHTML = '';
 
-            // Loop dan buat HTML
-            filteredGames.forEach((game, index) => {
-                const card = `
-                    <article class="game-card" style="animation-delay: ${index * 0.1}s">
-                        <img src="${game.image}" alt="${game.title}" class="card-img">
+            const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
+
+            filtered.forEach((game) => {
+                container.innerHTML += `
+                    <div class="game-card">
+                        <div class="image-container">
+                            ${game.isNew ? '<span class="badge-new">NEW UPDATE</span>' : ''}
+                            <img src="${game.image}" class="card-img" alt="${game.title}">
+                        </div>
                         <div class="card-content">
-                            <span class="genre-badge">${game.genre}</span>
+                            <div class="card-meta">
+                                <span class="genre-tag">${game.genre}</span>
+                                <span class="post-date">${game.date}</span>
+                            </div>
                             <h3 class="game-title">${game.title}</h3>
                             <p class="game-desc">${game.desc}</p>
-                            <a href="${game.link}" class="play-btn" target="_blank">Mainkan Sekarang</a>
+                            <a href="${game.link}" class="play-btn">Play Game</a>
                         </div>
-                    </article>
+                    </div>
                 `;
-                container.innerHTML += card;
             });
         }
 
-        // Fungsi untuk mengatur tombol aktif
-        function filterGames(category) {
-            // Update tampilan tombol
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active'); // Tombol yg diklik jadi aktif
-
+        function filterGames(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
             displayGames(category);
         }
 
-        // Jalankan saat pertama kali load
-        displayGames('all');
+        function toggleModal() {
+            const modal = document.getElementById('donateModal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
 
+        // Inisialisasi
+        displayGames('all');
     </script>
 </body>
 </html>
