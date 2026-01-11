@@ -1,5 +1,5 @@
 const games = [
-{
+    {
         id: 1,
         title: "Neon Knight",
         genre: "Action",
@@ -7,40 +7,55 @@ const games = [
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
         isNew: true,
-        desc: "Pertempuran pedang di masa depan...",
+        desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-        // Pisahkan linknya di sini
         downloadWindows: "https://link-download-windows.com",
         downloadAndroid: "https://link-download-android.com"
     },
-{
+    {
         id: 2,
-        title: "ANjasss",
-        genre: "Action",
-        releaseDate: "20 Mei 2024",
+        title: "Galaxy Raiders",
+        genre: "RPG",
+        releaseDate: "25 Juni 2024",
         developedBy: "Nama Kamu",
-        platforms: "Android, PC/Windows",
-        isNew: true,
-        desc: "Pertempuran pedang di masa depan...",
-        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-        // Pisahkan linknya di sini
-        downloadWindows: "https://link-download-windows.com",
+        platforms: "Android",
+        isNew: false,
+        desc: "Jelajahi galaksi dan kalahkan monster alien dalam RPG turn-based ini...",
+        image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
+        downloadWindows: null, // Contoh jika tidak ada versi Windows
         downloadAndroid: "https://link-download-android.com"
     },
 ];
 
-// Menampilkan Daftar Game di Home
+// --- 1. FUNGSI UNTUK MENAMPILKAN DAFTAR GAME (HOME) ---
+
+// Variabel global untuk ID game yang sedang dibuka
+let currentOpenGameId = null;
+
+// Tampilkan game saat awal load
+displayGames('all');
+
 function displayGames(category) {
+    // Kita gunakan fungsi renderGames agar tidak menulis ulang kode
+    const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
+    renderGames(filtered);
+}
+
+function renderGames(data) {
     const container = document.getElementById('gameContainer');
     container.innerHTML = '';
-    const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
 
-    filtered.forEach((game) => {
+    if (data.length === 0) {
+        container.innerHTML = `<div class="no-results">Game tidak ditemukan.</div>`;
+        return;
+    }
+
+    data.forEach((game) => {
         container.innerHTML += `
             <div class="game-card">
                 <div class="image-container">
                     ${game.isNew ? '<span class="badge-new">NEW</span>' : ''}
-                    <img src="${game.image}" class="card-img">
+                    <img src="${game.image}" class="card-img" loading="lazy">
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
@@ -55,9 +70,51 @@ function displayGames(category) {
     });
 }
 
-// Menampilkan Halaman Detail
+function filterGames(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    displayGames(category);
+}
+
+function searchGames() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    
+    // Reset tombol filter ke 'All' saat mencari
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+
+    const filtered = games.filter(game => 
+        game.title.toLowerCase().includes(input) || 
+        game.genre.toLowerCase().includes(input)
+    );
+
+    renderGames(filtered);
+}
+
+// --- 2. FUNGSI NAVIGASI HALAMAN ---
+
+function showHome() {
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('detailPage').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
+function toggleModal() {
+    const modal = document.getElementById('donateModal');
+    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// --- 3. FUNGSI DETAIL GAME (YANG SEBELUMNYA RUSAK) ---
+
 function showDetail(gameId) {
+    // A. Cari data game
     const game = games.find(g => g.id === gameId);
+    if (!game) return;
+
+    // B. Set ID aktif untuk komentar
+    currentOpenGameId = gameId;
+
+    // C. Ganti Tampilan
     const homePage = document.getElementById('homePage');
     const detailPage = document.getElementById('detailPage');
     const detailContent = document.getElementById('detailContent');
@@ -66,6 +123,7 @@ function showDetail(gameId) {
     detailPage.style.display = 'block';
     window.scrollTo(0,0);
 
+    // D. Masukkan HTML Detail
     detailContent.innerHTML = `
         <button class="btn-back" onclick="showHome()">← Kembali ke Home</button>
         
@@ -110,13 +168,13 @@ function showDetail(gameId) {
                         
                         ${game.downloadWindows ? `
                             <a href="${game.downloadWindows}" target="_blank" class="btn-dl btn-windows">
-                                <i class="fa-brands fa-windows"></i> Download for Windows
+                                Download for Windows
                             </a>
                         ` : ''}
                 
                         ${game.downloadAndroid ? `
                             <a href="${game.downloadAndroid}" target="_blank" class="btn-dl btn-android">
-                                <i class="fa-brands fa-android"></i> Download for Android
+                                Download for Android
                             </a>
                         ` : ''}
                     </div>
@@ -124,87 +182,13 @@ function showDetail(gameId) {
             </div>
         </div>
     `;
+
+    // E. Load komentar untuk game ini
+    renderComments();
 }
 
-function showHome() {
-    document.getElementById('homePage').style.display = 'block';
-    document.getElementById('detailPage').style.display = 'none';
-}
+// --- 4. SISTEM KOMENTAR ---
 
-function filterGames(category, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    displayGames(category);
-}
-
-function toggleModal() {
-    const modal = document.getElementById('donateModal');
-    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-}
-
-displayGames('all');
-
-// Fungsi Pencarian
-function searchGames() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const container = document.getElementById('gameContainer');
-    
-    // Reset tombol filter ke 'All' saat mencari
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
-
-    const filtered = games.filter(game => 
-        game.title.toLowerCase().includes(input) || 
-        game.genre.toLowerCase().includes(input)
-    );
-
-    renderGames(filtered);
-}
-
-// Kita pisahkan fungsi render agar bisa dipakai ulang oleh Filter dan Search
-function renderGames(data) {
-    const container = document.getElementById('gameContainer');
-    container.innerHTML = '';
-
-    if (data.length === 0) {
-        container.innerHTML = `<div class="no-results">Game "${document.getElementById('searchInput').value}" tidak ditemukan.</div>`;
-        return;
-    }
-
-    data.forEach((game) => {
-        container.innerHTML += `
-            <div class="game-card">
-                <div class="image-container">
-                    ${game.isNew ? '<span class="badge-new">NEW</span>' : ''}
-                    <img src="${game.image}" class="card-img">
-                </div>
-                <div class="card-content">
-                    <div class="card-meta">
-                        <span class="genre-tag">${game.genre}</span>
-                    </div>
-                    <h3 class="game-title">${game.title}</h3>
-                    <p class="game-desc">${game.desc.substring(0, 80)}...</p>
-                    <button onclick="showDetail(${game.id})" class="play-btn">Lihat Detailnya</button>
-                </div>
-            </div>
-        `;
-    });
-}
-
-// Variabel global untuk ID game yang sedang dibuka
-let currentOpenGameId = null;
-
-function showDetail(gameId) {
-    // 1. Cari data game berdasarkan ID
-    const game = games.find(g => g.id === gameId);
-    
-    // Jika game tidak ditemukan (untuk jaga-jaga)
-    if (!game) {
-        console.error("Game not found!");
-        return;
-    }
-
-// FUNGSI KOMENTAR BARU
 function addComment() {
     const nameInput = document.getElementById('commenterName');
     const textInput = document.getElementById('commentText');
@@ -216,7 +200,7 @@ function addComment() {
 
     const newComment = {
         name: nameInput.value,
-        text: textInput.value,
+        text: textInput.value, // Hati-hati XSS di real project
         date: new Date().toLocaleString('id-ID'),
         gameId: currentOpenGameId
     };
@@ -241,7 +225,7 @@ function renderComments() {
     
     const allComments = JSON.parse(localStorage.getItem('gameVaultComments')) || [];
     
-    // Filter komentar hanya untuk game yang sedang dibuka
+    // Filter komentar hanya untuk game yang sedang dibuka (berdasarkan ID)
     const gameComments = allComments.filter(c => c.gameId === currentOpenGameId);
 
     if (gameComments.length === 0) {
