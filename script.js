@@ -7,7 +7,6 @@ const games = [
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
         isNew: true,
-        isHot: true,
         desc: "Pertempuran pedang di masa depan...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
         // Pisahkan linknya di sini
