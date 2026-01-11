@@ -117,3 +117,59 @@ function toggleModal() {
 }
 
 displayGames('all');
+
+// Fungsi Pencarian
+function searchGames() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const container = document.getElementById('gameContainer');
+    
+    // Reset tombol filter ke 'All' saat mencari
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+
+    const filtered = games.filter(game => 
+        game.title.toLowerCase().includes(input) || 
+        game.genre.toLowerCase().includes(input)
+    );
+
+    renderGames(filtered);
+}
+
+// Kita pisahkan fungsi render agar bisa dipakai ulang oleh Filter dan Search
+function renderGames(data) {
+    const container = document.getElementById('gameContainer');
+    container.innerHTML = '';
+
+    if (data.length === 0) {
+        container.innerHTML = `<div class="no-results">Game "${document.getElementById('searchInput').value}" tidak ditemukan.</div>`;
+        return;
+    }
+
+    data.forEach((game) => {
+        container.innerHTML += `
+            <div class="game-card">
+                <div class="image-container">
+                    ${game.isNew ? '<span class="badge-new">NEW</span>' : ''}
+                    <img src="${game.image}" class="card-img">
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="genre-tag">${game.genre}</span>
+                    </div>
+                    <h3 class="game-title">${game.title}</h3>
+                    <p class="game-desc">${game.desc.substring(0, 80)}...</p>
+                    <button onclick="showDetail(${game.id})" class="play-btn">Lihat Detailnya</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Update fungsi displayGames lama agar memakai renderGames
+function displayGames(category) {
+    // Kosongkan search box saat klik filter
+    document.getElementById('searchInput').value = '';
+    
+    const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
+    renderGames(filtered);
+}
