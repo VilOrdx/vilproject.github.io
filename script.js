@@ -2,12 +2,12 @@ const games = [
 {
         id: 1,
         title: "Neon Knight",
-        isHot: true,
         genre: "Action",
         releaseDate: "20 Mei 2024",
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
         isNew: true,
+        isHot: true,
         desc: "Pertempuran pedang di masa depan...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
         // Pisahkan linknya di sini
