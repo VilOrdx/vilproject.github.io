@@ -269,36 +269,82 @@ function deleteComment(index) {
     }
 }
 
-// --- LOGIKA AUTO SLIDE BANNER ---
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
+function initHeroSlider() {
+    const container = document.getElementById('slidesContainer');
+    const dotsContainer = document.getElementById('sliderDots');
+    
+    // 1. Filter game yang punya label isHot
+    const hotGames = games.filter(g => g.isHot);
+    
+    if (hotGames.length === 0) {
+        document.getElementById('heroSlider').style.display = 'none';
+        return;
+    }
 
-function showSlide(index) {
-    // Reset semua slide dan dot
-    slides.forEach(s => s.classList.remove('active'));
-    dots.forEach(d => d.classList.remove('active'));
+    container.innerHTML = '';
+    dotsContainer.innerHTML = '';
 
-    // Aktifkan slide dan dot tujuan
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-}
+    // 2. Render Slide & Dots secara otomatis
+    hotGames.forEach((game, index) => {
+        const activeClass = index === 0 ? 'active' : '';
+        
+        // Buat Slide
+        container.innerHTML += `
+            <div class="slide ${activeClass}">
+                <img src="${game.image}" alt="${game.title}">
+                <div class="slide-content">
+                    <span class="badge-hot">HOT GAME</span>
+                    <h2>${game.title}</h2>
+                    <p>${game.desc.substring(0, 100)}...</p>
+                    <button onclick="showDetail(${game.id})" class="btn-donate">Lihat Detail</button>
+                </div>
+            </div>
+        `;
 
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-}
-
-// Jalankan otomatis setiap 5 detik
-let slideInterval = setInterval(nextSlide, 5000);
-
-// Tambahkan fungsi klik pada dots
-dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        currentSlide = index;
-        showSlide(index);
-        // Reset timer saat diklik manual
-        clearInterval(slideInterval);
-        slideInterval = setInterval(nextSlide, 5000);
+        // Buat Dot
+        dotsContainer.innerHTML += `
+            <span class="dot ${activeClass}" onclick="currentSlideManual(${index})"></span>
+        `;
     });
-});
+
+    startAutoSlide();
+}
+
+let slideIdx = 0;
+let slideTimer;
+
+function startAutoSlide() {
+    clearInterval(slideTimer);
+    slideTimer = setInterval(() => changeSlide(1), 15000);
+}
+
+function changeSlide(n) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    slides[slideIdx].classList.remove('active');
+    dots[slideIdx].classList.remove('active');
+
+    slideIdx = (slideIdx + n + slides.length) % slides.length;
+
+    slides[slideIdx].classList.add('active');
+    dots[slideIdx].classList.add('active');
+    startAutoSlide(); // Reset timer setiap kali ganti slide
+}
+
+function currentSlideManual(n) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    slides[slideIdx].classList.remove('active');
+    dots[slideIdx].classList.remove('active');
+
+    slideIdx = n;
+
+    slides[slideIdx].classList.add('active');
+    dots[slideIdx].classList.add('active');
+    startAutoSlide();
+}
+
+// Panggil fungsi inisialisasi
+initHeroSlider();
