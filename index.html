@@ -3,86 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OrangGabut Clone</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/layout.css">
-    <link rel="stylesheet" href="assets/css/components.css">
+    <title>GameVault - Koleksi Game Saya</title>
+    <style>
+        /* --- 1. CSS (TAMPILAN) --- */
+        :root {
+            --bg-color: #0f0f13;
+            --card-bg: #1a1a24;
+            --text-main: #ffffff;
+            --text-sec: #a0a0b0;
+            --accent: #8c52ff; /* Ungu Neon */
+            --accent-hover: #6a00ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 50px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, rgba(140,82,255,0.1) 0%, rgba(15,15,19,0) 100%);
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 10px; letter-spacing: 2px; }
+        p.subtitle { color: var(--text-sec); font-size: 1.2rem; }
+
+        /* Filter Buttons */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--text-main);
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* Grid Layout */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Game Card Design */
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            opacity: 0; /* Untuk animasi fade-in */
+            animation: fadeIn 0.6s forwards;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-color: var(--accent);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            background-color: #333;
+            object-fit: cover;
+        }
+
+        .card-content { padding: 20px; }
+
+        .genre-badge {
+            background-color: rgba(140,82,255,0.2);
+            color: #bd9eff;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .game-title { font-size: 1.5rem; margin-bottom: 10px; }
+        .game-desc { color: var(--text-sec); font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; }
+
+        .play-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .play-btn:hover { background-color: var(--accent-hover); }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">OrangGabut</a>
-            <div class="search-box">
-                <input type="text" placeholder="Cari game...">
-                <button>🔍</button>
-            </div>
-        </div>
-    </nav>
+    <header>
+        <h1>GAME VAULT</h1>
+        <p class="subtitle">Mainkan koleksi game indie terbaik buatan saya.</p>
+    </header>
 
-    <main class="container">
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterGames('all')">All</button>
+        <button class="filter-btn" onclick="filterGames('Action')">Action</button>
+        <button class="filter-btn" onclick="filterGames('RPG')">RPG</button>
+        <button class="filter-btn" onclick="filterGames('Puzzle')">Puzzle</button>
+    </div>
+
+    <div class="game-grid" id="gameContainer">
+        </div>
+
+    <script>
+        /* --- 2. JAVASCRIPT (LOGIKA & DATA) --- */
         
-        <div class="filter-wrapper">
-            <button class="filter-btn active">All Game</button>
-            <button class="filter-btn">Android/APK</button>
-            <button class="filter-btn">PC Game</button>
-        </div>
+        // DATA GAME (Edit bagian ini untuk menambah game baru)
+        const games = [
+            {
+                title: "Cyber Rush",
+                genre: "Action",
+                desc: "Game lari tanpa henti di dunia cyberpunk. Hindari rintangan neon dan kumpulkan koin crypto!",
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=500&q=80",
+                link: "#"
+            },
+            {
+                title: "Forest Mystery",
+                genre: "RPG",
+                desc: "Jelajahi hutan terlarang dan temukan rahasia kuno yang terkubur selama ribuan tahun.",
+                image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=80",
+                link: "#"
+            },
+            {
+                title: "Block Breaker",
+                genre: "Puzzle",
+                desc: "Hancurkan balok dengan strategi. Semakin tinggi level, semakin sulit tantangannya.",
+                image: "https://images.unsplash.com/photo-1605218427360-36390f8555e9?auto=format&fit=crop&w=500&q=80",
+                link: "#"
+            },
+            {
+                title: "Space Warrior",
+                genre: "Action",
+                desc: "Pertahankan galaksi dari serangan alien. Tembak musuh dan upgrade pesawatmu.",
+                image: "https://images.unsplash.com/photo-1614720368849-3e16221b5312?auto=format&fit=crop&w=500&q=80",
+                link: "#"
+            },
+             {
+                title: "Dungeon Souls",
+                genre: "RPG",
+                desc: "Roguelike RPG dengan sistem loot yang acak dan musuh yang menantang.",
+                image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=500&q=80",
+                link: "#"
+            }
+        ];
 
-        <h2 class="section-title">Daftar Game</h2>
+        const container = document.getElementById('gameContainer');
+        const buttons = document.querySelectorAll('.filter-btn');
 
-        <div class="game-grid">
+        // Fungsi untuk menampilkan game
+        function displayGames(category) {
+            container.innerHTML = ''; // Kosongkan isi dulu
             
-            <article class="game-card">
-                <div class="card-image">
-                    <img src="https://placehold.co/600x400/1e293b/FFF?text=Game+Cover+1" alt="Game Cover">
-                    <span class="badge">Hot</span>
-                </div>
-                <div class="card-content">
-                    <div class="tags">
-                        <span class="tag">RPG</span>
-                        <span class="tag">Anime</span>
-                    </div>
-                    <h3>Shy Mio-chan and the Milking Life</h3>
-                    <a href="details.html" class="btn-detail">Lihat Detail</a>
-                    <a href="#" class="btn-download">Download</a>
-                </div>
-            </article>
+            // Filter data
+            const filteredGames = category === 'all' 
+                ? games 
+                : games.filter(game => game.genre === category);
 
-            <article class="game-card">
-                <div class="card-image">
-                    <img src="https://placehold.co/600x400/0f172a/FFF?text=Game+Cover+2" alt="Game Cover">
-                    <span class="badge update">Update</span>
-                </div>
-                <div class="card-content">
-                    <div class="tags">
-                        <span class="tag">Action</span>
-                        <span class="tag">3D</span>
-                    </div>
-                    <h3>Old Professor x1.0</h3>
-                    <a href="details.html" class="btn-detail">Lihat Detail</a>
-                    <a href="#" class="btn-download">Download</a>
-                </div>
-            </article>
+            // Loop dan buat HTML
+            filteredGames.forEach((game, index) => {
+                const card = `
+                    <article class="game-card" style="animation-delay: ${index * 0.1}s">
+                        <img src="${game.image}" alt="${game.title}" class="card-img">
+                        <div class="card-content">
+                            <span class="genre-badge">${game.genre}</span>
+                            <h3 class="game-title">${game.title}</h3>
+                            <p class="game-desc">${game.desc}</p>
+                            <a href="${game.link}" class="play-btn" target="_blank">Mainkan Sekarang</a>
+                        </div>
+                    </article>
+                `;
+                container.innerHTML += card;
+            });
+        }
 
-             <article class="game-card">
-                <div class="card-image">
-                    <img src="https://placehold.co/600x400/334155/FFF?text=Game+Cover+3" alt="Game Cover">
-                </div>
-                <div class="card-content">
-                    <div class="tags">
-                        <span class="tag">Sim</span>
-                    </div>
-                    <h3>Summer Memories</h3>
-                    <a href="details.html" class="btn-detail">Lihat Detail</a>
-                    <a href="#" class="btn-download">Download</a>
-                </div>
-            </article>
+        // Fungsi untuk mengatur tombol aktif
+        function filterGames(category) {
+            // Update tampilan tombol
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active'); // Tombol yg diklik jadi aktif
 
-        </div>
-    </main>
+            displayGames(category);
+        }
 
+        // Jalankan saat pertama kali load
+        displayGames('all');
+
+    </script>
 </body>
 </html>
