@@ -229,13 +229,42 @@ function renderComments() {
         return;
     }
 
-    gameComments.reverse().forEach(c => {
+    gameComments.reverse().forEach((c, index) => {
+        // Kita gunakan index asli dari array allComments untuk menghapus
+        const originalIndex = allComments.indexOf(c);
+        
         list.innerHTML += `
-            <div class="comment-item">
+            <div class="comment-item" style="position: relative;">
                 <strong>${c.name}</strong>
                 <p>${c.text}</p>
                 <small>${c.date}</small>
+                
+                <button onclick="deleteComment(${originalIndex})" 
+                        style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ff4444; cursor: pointer; font-size: 0.7rem;">
+                    [Hapus]
+                </button>
             </div>
         `;
     });
+}
+
+function deleteComment(index) {
+    // Ganti 'admin123' dengan password yang kamu inginkan
+    const password = prompt("vilganteng");
+
+    if (password === "admin123") { // <-- GANTI PASSWORD DISINI
+        let allComments = JSON.parse(localStorage.getItem('gameVaultComments')) || [];
+        
+        // Hapus 1 item berdasarkan index
+        allComments.splice(index, 1);
+        
+        // Simpan kembali ke LocalStorage
+        localStorage.setItem('gameVaultComments', JSON.stringify(allComments));
+        
+        // Refresh daftar komentar
+        renderComments();
+        alert("Komentar berhasil dihapus!");
+    } else {
+        alert("Kode Admin salah!");
+    }
 }
