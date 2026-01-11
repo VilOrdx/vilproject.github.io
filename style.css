@@ -494,22 +494,6 @@ h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to righ
     padding: 20px;
 }
 
-.screenshot-gallery::-webkit-scrollbar {
-    height: 6px;
-}
-.screenshot-gallery::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 10px;
-}
-.screenshot-gallery::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
-.preview-img:hover {
-    transform: scale(1.03);
-    border-color: var(--accent) !important;
-    transition: 0.3s;
-}
-
 /* Container Gallery Preview */
 .preview-slider-container {
     position: relative;
