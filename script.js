@@ -1,5 +1,6 @@
+// --- DATABASE GAME ---
 const games = [
-{
+    {
         id: 1,
         title: "Neon Knight",
         genre: "Action",
@@ -7,40 +8,63 @@ const games = [
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
         isNew: true,
-        desc: "Pertempuran pedang di masa depan...",
+        desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-        // Pisahkan linknya di sini
         downloadWindows: "https://link-download-windows.com",
         downloadAndroid: "https://link-download-android.com"
     },
-{
+    {
         id: 2,
-        title: "ANjasss",
-        genre: "Action",
-        releaseDate: "20 Mei 2024",
+        title: "Galaxy Raiders",
+        genre: "RPG",
+        releaseDate: "25 Juni 2024",
         developedBy: "Nama Kamu",
-        platforms: "Android, PC/Windows",
-        isNew: true,
-        desc: "Pertempuran pedang di masa depan...",
-        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-        // Pisahkan linknya di sini
-        downloadWindows: "https://link-download-windows.com",
+        platforms: "Android",
+        isNew: false,
+        desc: "Jelajahi galaksi dan kalahkan monster alien dalam RPG turn-based ini...",
+        image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
+        downloadWindows: null, 
         downloadAndroid: "https://link-download-android.com"
-    },
+    }
 ];
 
-// Menampilkan Daftar Game di Home
-function displayGames(category) {
-    const container = document.getElementById('gameContainer');
-    container.innerHTML = '';
-    const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
+// --- LOGIKA UTAMA ---
 
-    filtered.forEach((game) => {
+// Variabel global untuk ID game yang sedang dibuka
+let currentOpenGameId = null;
+
+// Jalankan fungsi ini pertama kali saat web dibuka agar game muncul!
+displayGames('all');
+
+// Fungsi 1: Mengatur filter kategori
+function displayGames(category) {
+    const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
+    renderGames(filtered);
+}
+
+// Fungsi 2: Merender (menggambar) kartu game ke layar
+function renderGames(data) {
+    const container = document.getElementById('gameContainer');
+    
+    // Cek apakah elemen container ada di HTML
+    if (!container) {
+        console.error("Error: Element dengan ID 'gameContainer' tidak ditemukan di HTML!");
+        return;
+    }
+
+    container.innerHTML = ''; // Bersihkan isi container sebelum diisi ulang
+
+    if (data.length === 0) {
+        container.innerHTML = `<div class="no-results">Game tidak ditemukan.</div>`;
+        return;
+    }
+
+    data.forEach((game) => {
         container.innerHTML += `
             <div class="game-card">
                 <div class="image-container">
                     ${game.isNew ? '<span class="badge-new">NEW</span>' : ''}
-                    <img src="${game.image}" class="card-img">
+                    <img src="${game.image}" class="card-img" loading="lazy" alt="${game.title}">
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
@@ -55,93 +79,17 @@ function displayGames(category) {
     });
 }
 
-// Menampilkan Halaman Detail
-function showDetail(gameId) {
-    const game = games.find(g => g.id === gameId);
-    const homePage = document.getElementById('homePage');
-    const detailPage = document.getElementById('detailPage');
-    const detailContent = document.getElementById('detailContent');
-
-    homePage.style.display = 'none';
-    detailPage.style.display = 'block';
-    window.scrollTo(0,0);
-
-    detailContent.innerHTML = `
-        <button class="btn-back" onclick="showHome()">← Kembali</button>
-        <img src="${game.image}" class="detail-header-img">
-        
-        <div class="detail-grid">
-            <div class="detail-main">
-                <h1>${game.title}</h1>
-                <p style="margin-top:20px; color: var(--text-sec);">${game.desc}</p>
-            </div>
-            
-            <div class="detail-side">
-                <div class="detail-info-card">
-                    <div class="info-item">
-                        <span class="info-label">GENRE</span>
-                        <span class="info-value">${game.genre}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">DIKEMBANGKAN OLEH</span>
-                        <span class="info-value">${game.developedBy}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">RILIS</span>
-                        <span class="info-value">${game.releaseDate}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">SUPPORT DEVICE</span>
-                        <span class="info-value">${game.platforms}</span>
-                    </div>
-                    
-                    <div class="download-box">
-                    <p style="margin-bottom: 10px; font-size: 0.9rem; font-weight: bold;">UNDUH GAME:</p>
-                    
-                    ${game.downloadWindows ? `
-                        <a href="${game.downloadWindows}" class="play-btn" style="background: #0078d4; color: white; border: none; margin-bottom: 10px;">
-                            Download for Windows (PC)
-                        </a>
-                    ` : ''}
-                
-                    ${game.downloadAndroid ? `
-                        <a href="${game.downloadAndroid}" class="play-btn" style="background: #3DDC84; color: #000; border: none;">
-                            Download for Android (APK)
-                        </a>
-                    ` : ''}
-                </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function showHome() {
-    document.getElementById('homePage').style.display = 'block';
-    document.getElementById('detailPage').style.display = 'none';
-}
-
-function filterGames(category, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    displayGames(category);
-}
-
-function toggleModal() {
-    const modal = document.getElementById('donateModal');
-    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-}
-
-displayGames('all');
-
-// Fungsi Pencarian
+// Fungsi 3: Fitur Pencarian
 function searchGames() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const container = document.getElementById('gameContainer');
+    const inputElement = document.getElementById('searchInput');
+    if (!inputElement) return; // Guard clause
+
+    const input = inputElement.value.toLowerCase();
     
-    // Reset tombol filter ke 'All' saat mencari
+    // Reset tombol filter visual
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+    const allBtn = document.querySelector('.filter-btn[onclick*="all"]');
+    if (allBtn) allBtn.classList.add('active');
 
     const filtered = games.filter(game => 
         game.title.toLowerCase().includes(input) || 
@@ -151,54 +99,101 @@ function searchGames() {
     renderGames(filtered);
 }
 
-// Kita pisahkan fungsi render agar bisa dipakai ulang oleh Filter dan Search
-function renderGames(data) {
-    const container = document.getElementById('gameContainer');
-    container.innerHTML = '';
-
-    if (data.length === 0) {
-        container.innerHTML = `<div class="no-results">Game "${document.getElementById('searchInput').value}" tidak ditemukan.</div>`;
-        return;
-    }
-
-    data.forEach((game) => {
-        container.innerHTML += `
-            <div class="game-card">
-                <div class="image-container">
-                    ${game.isNew ? '<span class="badge-new">NEW</span>' : ''}
-                    <img src="${game.image}" class="card-img">
-                </div>
-                <div class="card-content">
-                    <div class="card-meta">
-                        <span class="genre-tag">${game.genre}</span>
-                    </div>
-                    <h3 class="game-title">${game.title}</h3>
-                    <p class="game-desc">${game.desc.substring(0, 80)}...</p>
-                    <button onclick="showDetail(${game.id})" class="play-btn">Lihat Detailnya</button>
-                </div>
-            </div>
-        `;
-    });
+// Fungsi 4: Filter Tombol (Action, RPG, dll)
+function filterGames(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    displayGames(category);
 }
 
-// Variabel global untuk ID game yang sedang dibuka
-let currentOpenGameId = null;
+// --- NAVIGASI HALAMAN ---
 
-// Modifikasi fungsi showDetail yang sudah ada sebelumnya
+function showHome() {
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('detailPage').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
 function showDetail(gameId) {
-    currentOpenGameId = gameId; // Simpan ID game yang sedang dilihat
     const game = games.find(g => g.id === gameId);
+    if (!game) return;
+
+    currentOpenGameId = gameId;
+
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('detailPage').style.display = 'block';
+    window.scrollTo(0,0);
+
+    const detailContent = document.getElementById('detailContent');
     
-    // ... (kode render detailContent yang lama tetap sama) ...
-    
-    // Panggil fungsi untuk menampilkan komentar yang tersimpan
+    detailContent.innerHTML = `
+        <button class="btn-back" onclick="showHome()">← Kembali ke Home</button>
+        
+        <div class="detail-header-wrapper">
+             <img src="${game.image}" class="detail-header-img" alt="${game.title}">
+        </div>
+        
+        <div class="detail-grid">
+            <div class="detail-main">
+                <h1 style="font-size: 2.5rem; margin-bottom: 10px;">${game.title}</h1>
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <span class="genre-tag" style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px;">${game.genre}</span>
+                </div>
+                <p style="line-height: 1.8; color: var(--text-sec); font-size: 1.1rem;">
+                    ${game.desc}
+                </p>
+            </div>
+            
+            <div class="detail-side">
+                <div class="detail-info-card">
+                    <div class="info-item">
+                        <span class="info-label">GENRE</span>
+                        <span class="info-value">${game.genre}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">DEVELOPER</span>
+                        <span class="info-value">${game.developedBy}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">RILIS</span>
+                        <span class="info-value">${game.releaseDate}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">PLATFORM</span>
+                        <span class="info-value">${game.platforms}</span>
+                    </div>
+                    
+                    <div class="download-box">
+                        <p style="margin-bottom: 15px; font-size: 0.9rem; font-weight: bold; color: white;">
+                            UNDUH GAME SEKARANG:
+                        </p>
+                        ${game.downloadWindows ? `<a href="${game.downloadWindows}" target="_blank" class="btn-dl btn-windows"><i class="fa-brands fa-windows"></i> Download for Windows</a>` : ''}
+                        ${game.downloadAndroid ? `<a href="${game.downloadAndroid}" target="_blank" class="btn-dl btn-android"><i class="fa-brands fa-android"></i> Download for Android</a>` : ''}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
     renderComments();
 }
 
-// FUNGSI KOMENTAR BARU
+// --- FITUR LAINNYA ---
+
+function toggleModal() {
+    const modal = document.getElementById('donateModal');
+    if (modal) {
+        modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+    }
+}
+
+// --- SISTEM KOMENTAR ---
+
 function addComment() {
     const nameInput = document.getElementById('commenterName');
     const textInput = document.getElementById('commentText');
+
+    if (!nameInput || !textInput) return;
 
     if (nameInput.value.trim() === "" || textInput.value.trim() === "") {
         alert("Nama dan komentar tidak boleh kosong!");
@@ -207,32 +202,26 @@ function addComment() {
 
     const newComment = {
         name: nameInput.value,
-        text: textInput.value,
+        text: textInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;"), // Basic security
         date: new Date().toLocaleString('id-ID'),
         gameId: currentOpenGameId
     };
 
-    // Ambil komentar lama dari LocalStorage
     let allComments = JSON.parse(localStorage.getItem('gameVaultComments')) || [];
-    
-    // Tambah komentar baru
     allComments.push(newComment);
-    
-    // Simpan kembali ke LocalStorage
     localStorage.setItem('gameVaultComments', JSON.stringify(allComments));
 
-    // Reset Form & Render ulang
     textInput.value = "";
     renderComments();
 }
 
 function renderComments() {
     const list = document.getElementById('commentList');
+    if (!list) return;
+    
     list.innerHTML = "";
     
     const allComments = JSON.parse(localStorage.getItem('gameVaultComments')) || [];
-    
-    // Filter komentar hanya untuk game yang sedang dibuka
     const gameComments = allComments.filter(c => c.gameId === currentOpenGameId);
 
     if (gameComments.length === 0) {
@@ -240,7 +229,6 @@ function renderComments() {
         return;
     }
 
-    // Tampilkan dari yang terbaru (di atas)
     gameComments.reverse().forEach(c => {
         list.innerHTML += `
             <div class="comment-item">
