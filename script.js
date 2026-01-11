@@ -54,21 +54,20 @@ displayGames('all');
 
 // Fungsi 1: Mengatur filter kategori
 function displayGames(category) {
-    const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
+    // Jika 'all', tampilkan semua.
+    // Jika tidak, cek apakah dalam array genre game tersebut ADA kategori yang dipilih.
+    const filtered = category === 'all' 
+        ? games 
+        : games.filter(g => g.genre.includes(category)); 
+    
     renderGames(filtered);
 }
 
 // Fungsi 2: Merender (menggambar) kartu game ke layar
 function renderGames(data) {
     const container = document.getElementById('gameContainer');
-    
-    // Cek apakah elemen container ada di HTML
-    if (!container) {
-        console.error("Error: Element dengan ID 'gameContainer' tidak ditemukan di HTML!");
-        return;
-    }
-
-    container.innerHTML = ''; // Bersihkan isi container sebelum diisi ulang
+    if (!container) return;
+    container.innerHTML = '';
 
     if (data.length === 0) {
         container.innerHTML = `<div class="no-results">Game tidak ditemukan.</div>`;
@@ -76,6 +75,10 @@ function renderGames(data) {
     }
 
     data.forEach((game) => {
+        // LOGIKA BARU: Gabungkan semua genre menjadi HTML span terpisah
+        // map() akan mengubah ["NTR", "RPG"] menjadi "<span>NTR</span> <span>RPG</span>"
+        const genreHtml = game.genre.map(g => `<span class="genre-tag">${g}</span>`).join(' ');
+
         container.innerHTML += `
             <div class="game-card">
                 <div class="image-container">
@@ -84,8 +87,7 @@ function renderGames(data) {
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
-                        <span class="genre-tag">${game.genre}</span>
-                    </div>
+                        ${genreHtml} </div>
                     <h3 class="game-title">${game.title}</h3>
                     <p class="game-desc">${game.desc.substring(0, 80)}...</p>
                     <button onclick="showDetail(${game.id})" class="play-btn">Lihat Detailnya</button>
@@ -98,7 +100,7 @@ function renderGames(data) {
 // Fungsi 3: Fitur Pencarian
 function searchGames() {
     const inputElement = document.getElementById('searchInput');
-    if (!inputElement) return; // Guard clause
+    if (!inputElement) return;
 
     const input = inputElement.value.toLowerCase();
     
@@ -109,7 +111,8 @@ function searchGames() {
 
     const filtered = games.filter(game => 
         game.title.toLowerCase().includes(input) || 
-        game.genre.toLowerCase().includes(input)
+        // Cek apakah SALAH SATU genre mengandung kata kunci pencarian
+        game.genre.some(g => g.toLowerCase().includes(input))
     );
 
     renderGames(filtered);
