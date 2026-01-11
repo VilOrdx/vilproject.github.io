@@ -268,3 +268,37 @@ function deleteComment(index) {
         alert("Kode Admin salah!");
     }
 }
+
+// --- LOGIKA AUTO SLIDE BANNER ---
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(index) {
+    // Reset semua slide dan dot
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+
+    // Aktifkan slide dan dot tujuan
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+}
+
+// Jalankan otomatis setiap 5 detik
+let slideInterval = setInterval(nextSlide, 5000);
+
+// Tambahkan fungsi klik pada dots
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(index);
+        // Reset timer saat diklik manual
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+    });
+});
