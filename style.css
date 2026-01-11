@@ -509,3 +509,61 @@ h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to righ
     border-color: var(--accent) !important;
     transition: 0.3s;
 }
+
+/* Container Gallery Preview */
+.preview-slider-container {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.screenshot-gallery {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.screenshot-gallery::-webkit-scrollbar {
+    height: 5px;
+}
+
+.screenshot-gallery::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+
+.preview-img {
+    flex: 0 0 280px; /* Ukuran kotak preview */
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    scroll-snap-align: start;
+    border: 2px solid transparent;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.preview-img:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+/* Navigasi Kecil untuk Gallery */
+.gallery-nav-hint {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.gallery-nav-hint span {
+    font-size: 0.8rem;
+    color: var(--text-sec);
+}
