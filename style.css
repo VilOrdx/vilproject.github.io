@@ -258,3 +258,46 @@ h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to righ
 .btn-dl i {
     font-size: 1.2rem;
 }
+
+/* Styling Link Donasi di dalam Modal */
+.donation-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-donate-link {
+    display: block;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+    text-align: center;
+}
+
+/* Warna Khas Trakteer (Merah) */
+.btn-trakteer {
+    background-color: #be1e2d;
+    color: white;
+}
+
+/* Warna Khas Saweria (Kuning/Oranye) */
+.btn-saweria {
+    background-color: #faae2b;
+    color: #000;
+}
+
+.btn-donate-link:hover {
+    transform: scale(1.03);
+    filter: brightness(1.1);
+}
+
+.close-modal {
+    display: block;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--text-sec);
+    cursor: pointer;
+    text-decoration: underline;
+}
