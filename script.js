@@ -9,20 +9,10 @@ const games = [
         platforms: "Android, PC/Windows",
         isNew: true,
         isHot: true,
-        desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
-        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-        downloadWindows: "https://link-download-windows.com",
-        downloadAndroid: "https://link-download-android.com"
-    },
-    {
-        id: 1,
-        title: "KEinsdfat",
-        genre: "Action",
-        releaseDate: "20 Mei 2024",
-        developedBy: "Nama Kamu",
-        platforms: "Android, PC/Windows",
-        isNew: true,
-        isHot: true,
+        screenshots: [
+            "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500",
+            "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500",
+            "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=500"
         desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
         downloadWindows: "https://link-download-windows.com",
@@ -30,6 +20,24 @@ const games = [
     },
     {
         id: 2,
+        title: "KEinsdfat",
+        genre: "Action",
+        releaseDate: "20 Mei 2024",
+        developedBy: "Nama Kamu",
+        platforms: "Android, PC/Windows",
+        isNew: true,
+        isHot: true,
+        screenshots: [
+            "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500",
+            "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500",
+            "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=500"
+        desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
+        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
+        downloadWindows: "https://link-download-windows.com",
+        downloadAndroid: "https://link-download-android.com"
+    },
+    {
+        id: 3,
         title: "Galaxy Raiders",
         genre: "RPG",
         releaseDate: "25 Juni 2024",
@@ -37,6 +45,10 @@ const games = [
         platforms: "Android",
         isNew: false,
         isHot: true,
+        screenshots: [
+            "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500",
+            "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500",
+            "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=500"
         desc: "Jelajahi galaksi dan kalahkan monster alien dalam RPG turn-based ini...",
         image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
         downloadWindows: null, 
@@ -142,6 +154,23 @@ function showDetail(gameId) {
 
     const detailContent = document.getElementById('detailContent');
     
+    // Logika untuk menampilkan screenshots jika ada
+    let screenshotHTML = "";
+    if (game.screenshots && game.screenshots.length > 0) {
+        screenshotHTML = `
+            <div class="preview-section" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 15px; color: var(--accent);">GAME PREVIEW</h3>
+                <div class="screenshot-gallery" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px;">
+                    ${game.screenshots.map(img => `
+                        <img src="${img}" class="preview-img" 
+                             style="width: 250px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                             onclick="window.open('${img}', '_blank')">
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
     detailContent.innerHTML = `
         <button class="btn-back" onclick="showHome()">← Kembali ke Home</button>
         
@@ -155,9 +184,11 @@ function showDetail(gameId) {
                 <div style="display:flex; gap:10px; margin-bottom:20px;">
                     <span class="genre-tag" style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px;">${game.genre}</span>
                 </div>
-                <p style="line-height: 1.8; color: var(--text-sec); font-size: 1.1rem;">
+                <p style="line-height: 1.8; color: var(--text-sec); font-size: 1.1rem; margin-bottom: 20px;">
                     ${game.desc}
                 </p>
+
+                ${screenshotHTML}
             </div>
             
             <div class="detail-side">
