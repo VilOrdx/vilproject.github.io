@@ -67,13 +67,21 @@ function showDetail(gameId) {
     window.scrollTo(0,0);
 
     detailContent.innerHTML = `
-        <button class="btn-back" onclick="showHome()">← Kembali</button>
-        <img src="${game.image}" class="detail-header-img">
+        <button class="btn-back" onclick="showHome()">← Kembali ke Home</button>
+        
+        <div class="detail-header-wrapper">
+             <img src="${game.image}" class="detail-header-img" alt="${game.title}">
+        </div>
         
         <div class="detail-grid">
             <div class="detail-main">
-                <h1>${game.title}</h1>
-                <p style="margin-top:20px; color: var(--text-sec);">${game.desc}</p>
+                <h1 style="font-size: 2.5rem; margin-bottom: 10px;">${game.title}</h1>
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <span class="genre-tag" style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px;">${game.genre}</span>
+                </div>
+                <p style="line-height: 1.8; color: var(--text-sec); font-size: 1.1rem;">
+                    ${game.desc}
+                </p>
             </div>
             
             <div class="detail-side">
@@ -83,33 +91,35 @@ function showDetail(gameId) {
                         <span class="info-value">${game.genre}</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">DIKEMBANGKAN OLEH</span>
+                        <span class="info-label">DEVELOPER</span>
                         <span class="info-value">${game.developedBy}</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">RILIS</span>
+                        <span class="info-label">TANGGAL RILIS</span>
                         <span class="info-value">${game.releaseDate}</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">SUPPORT DEVICE</span>
+                        <span class="info-label">PLATFORM</span>
                         <span class="info-value">${game.platforms}</span>
                     </div>
                     
                     <div class="download-box">
-                    <p style="margin-bottom: 10px; font-size: 0.9rem; font-weight: bold;">UNDUH GAME:</p>
-                    
-                    ${game.downloadWindows ? `
-                        <a href="${game.downloadWindows}" class="play-btn" style="background: #0078d4; color: white; border: none; margin-bottom: 10px;">
-                            Download for Windows (PC)
-                        </a>
-                    ` : ''}
+                        <p style="margin-bottom: 15px; font-size: 0.9rem; font-weight: bold; color: white;">
+                            UNDUH GAME SEKARANG:
+                        </p>
+                        
+                        ${game.downloadWindows ? `
+                            <a href="${game.downloadWindows}" target="_blank" class="btn-dl btn-windows">
+                                <i class="fa-brands fa-windows"></i> Download for Windows
+                            </a>
+                        ` : ''}
                 
-                    ${game.downloadAndroid ? `
-                        <a href="${game.downloadAndroid}" class="play-btn" style="background: #3DDC84; color: #000; border: none;">
-                            Download for Android (APK)
-                        </a>
-                    ` : ''}
-                </div>
+                        ${game.downloadAndroid ? `
+                            <a href="${game.downloadAndroid}" target="_blank" class="btn-dl btn-android">
+                                <i class="fa-brands fa-android"></i> Download for Android
+                            </a>
+                        ` : ''}
+                    </div>
                 </div>
             </div>
         </div>
@@ -184,16 +194,15 @@ function renderGames(data) {
 // Variabel global untuk ID game yang sedang dibuka
 let currentOpenGameId = null;
 
-// Modifikasi fungsi showDetail yang sudah ada sebelumnya
 function showDetail(gameId) {
-    currentOpenGameId = gameId; // Simpan ID game yang sedang dilihat
+    // 1. Cari data game berdasarkan ID
     const game = games.find(g => g.id === gameId);
     
-    // ... (kode render detailContent yang lama tetap sama) ...
-    
-    // Panggil fungsi untuk menampilkan komentar yang tersimpan
-    renderComments();
-}
+    // Jika game tidak ditemukan (untuk jaga-jaga)
+    if (!game) {
+        console.error("Game not found!");
+        return;
+    }
 
 // FUNGSI KOMENTAR BARU
 function addComment() {
