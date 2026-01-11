@@ -1,28 +1,32 @@
 const games = [
-    {
+{
         id: 1,
         title: "Neon Knight",
         genre: "Action",
         releaseDate: "20 Mei 2024",
-        developedBy: "Nama Kamu/Studio Kamu",
+        developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
         isNew: true,
-        desc: "Pertempuran pedang di masa depan yang penuh dengan lampu neon. Hadapi musuh cyborg dalam gameplay fast-paced.",
+        desc: "Pertempuran pedang di masa depan...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
-        downloadLink: "https://link-download-kamu.com"
+        // Pisahkan linknya di sini
+        downloadWindows: "https://link-download-windows.com",
+        downloadAndroid: "https://link-download-android.com"
     },
-    {
+{
         id: 2,
-        title: "Pixel Quest",
-        genre: "RPG",
-        releaseDate: "15 April 2024",
+        title: "ANjasss",
+        genre: "Action",
+        releaseDate: "20 Mei 2024",
         developedBy: "Nama Kamu",
-        platforms: "PC/Windows",
-        isNew: false,
-        desc: "RPG klasik bergaya 8-bit dengan cerita yang mendalam dan quest unik di dunia fantasi terbuka.",
-        image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&q=80",
-        downloadLink: "#"
-    }
+        platforms: "Android, PC/Windows",
+        isNew: true,
+        desc: "Pertempuran pedang di masa depan...",
+        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
+        // Pisahkan linknya di sini
+        downloadWindows: "https://link-download-windows.com",
+        downloadAndroid: "https://link-download-android.com"
+    },
 ];
 
 // Menampilkan Daftar Game di Home
