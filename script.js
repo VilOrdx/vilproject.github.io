@@ -2,13 +2,15 @@
 const games = [
     {
         id: 1,
-        title: "Neon Knight",
-        genre: ["Visual Novel"] ["Netorare"],
-        releaseDate: "20 Mei 2024",
-        developedBy: "Nama Kamu",
+        title: "Astreon [Ch.2 v0.3.5 Fix]",
+        genre: "Visual Novel",
+        genre1: "Visual Novel, NTR, SILEdwf",
+        releaseDate: "Sep 13, 2024",
+        developedBy: "NoGlory",
         platforms: "Android, PC/Windows",
         isNew: true,
         isHot: true,
+        language1: "English dan Indonesia",
         desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
         downloadWindows: "https://link-download-windows.com",
@@ -17,12 +19,14 @@ const games = [
     {
         id: 2,
         title: "KEinsdfat",
-        genre: "NTR",
+        genre: "Netorare",
+        genre1: "Visual Novel, NTR, SILEdwf",
         releaseDate: "20 Mei 2024",
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
         isNew: true,
         isHot: true,
+        language1: "English dan Indonesia",
         desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
         downloadWindows: "https://link-download-windows.com",
@@ -31,15 +35,17 @@ const games = [
     {
         id: 3,
         title: "Galaxy Raiders",
-        genre: ["NTR"] ["Visual Novel"],
+        genre: "Visual Novel",
+        genre1: "Visual Novel, NTR, SILEdwf",
         releaseDate: "25 Juni 2024",
         developedBy: "Nama Kamu",
         platforms: "Android",
         isNew: false,
         isHot: true,
+        language1: "English dan Indonesia",
         desc: "Jelajahi galaksi dan kalahkan monster alien dalam RPG turn-based ini...",
         image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
-        downloadWindows: null, 
+        downloadWindows: "", 
         downloadAndroid: "https://link-download-android.com"
     }
 ];
@@ -164,11 +170,15 @@ function showDetail(gameId) {
                 <div class="detail-info-card">
                     <div class="info-item">
                         <span class="info-label">GENRE</span>
-                        <span class="info-value">${game.genre}</span>
+                        <span class="info-value">${game.genre1}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">DEVELOPER</span>
                         <span class="info-value">${game.developedBy}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">BAHASA</span>
+                        <span class="info-value">${game.language1}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">RILIS</span>
