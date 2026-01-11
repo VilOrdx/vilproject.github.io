@@ -22,7 +22,7 @@ const games = [
     {
         id: 2,
         title: "Konz",
-        genre: "Action", "RPG",
+        genre: "Action",
         releaseDate: "20 Mei 2024",
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
