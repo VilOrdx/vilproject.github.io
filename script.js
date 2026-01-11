@@ -251,3 +251,44 @@ function renderComments() {
         `;
     });
 }
+
+function displayHero() {
+    // Cari game yang punya tanda isHot: true
+    const hotGame = games.find(g => g.isHot) || games[0]; 
+    const banner = document.getElementById('featuredBanner');
+
+    banner.style.backgroundImage = `url('${hotGame.image}')`;
+    banner.innerHTML = `
+        <div class="hero-overlay">
+            <span class="hot-label"><i class="fa-solid fa-fire"></i> HOT PROJECT</span>
+            <h2 class="hero-title">${hotGame.title}</h2>
+            <p class="hero-desc">${hotGame.desc}</p>
+            <button onclick="showDetail(${hotGame.id})" class="play-btn" style="width: fit-content; padding: 10px 30px; background: var(--accent); color: black;">
+                Lihat Detail
+            </button>
+        </div>
+    `;
+}
+
+// Tambahkan ke fungsi showHome agar banner muncul lagi saat balik ke home
+function showHome() {
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('heroSection').style.display = 'block'; // Banner muncul
+    document.getElementById('detailPage').style.display = 'none';
+}
+
+// Tambahkan ke fungsi showDetail agar banner hilang saat baca detail
+function showDetail(gameId) {
+    currentOpenGameId = gameId;
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('heroSection').style.display = 'none'; // Banner sembunyi
+    document.getElementById('detailPage').style.display = 'block';
+    
+    const game = games.find(g => g.id === gameId);
+    // ... sisa kode renderDetailContent
+    renderComments();
+}
+
+// Panggil di paling bawah file script.js
+displayHero();
+displayGames('all');
