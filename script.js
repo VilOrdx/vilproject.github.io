@@ -17,7 +17,6 @@ const games = [
 {
         id: 2,
         title: "ANjasss",
-        isHot: true,
         genre: "Action",
         releaseDate: "20 Mei 2024",
         developedBy: "Nama Kamu",
