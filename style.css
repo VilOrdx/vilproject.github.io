@@ -156,49 +156,6 @@ h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to righ
 .info-label { color: var(--text-sec); font-size: 0.8rem; display: block; }
 .info-value { font-weight: 600; color: var(--accent); }
 
-.download-box {
-    background: linear-gradient(135deg, #1e1e26, #2d2d3a);
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-}
-
-@media (max-width: 768px) {
-    .detail-grid { grid-template-columns: 1fr; }
-}
-
-/* --- SEARCH BAR --- */
-.search-container {
-    max-width: 500px;
-    margin: 0 auto 30px;
-    padding: 0 20px;
-}
-
-#searchInput {
-    width: 100%;
-    padding: 12px 20px;
-    background: #1e1e26;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-    transition: 0.3s;
-}
-
-#searchInput:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
-}
-
-/* Animasi untuk hasil pencarian kosong */
-.no-results {
-    text-align: center;
-    color: var(--text-sec);
-    grid-column: 1 / -1;
-    padding: 40px;
-}
-
 /* Container Tombol Download */
 .download-box {
     background: rgba(255, 255, 255, 0.03);
@@ -257,4 +214,41 @@ h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to righ
 /* Ikon di dalam tombol */
 .btn-dl i {
     font-size: 1.2rem;
+}
+
+
+@media (max-width: 768px) {
+    .detail-grid { grid-template-columns: 1fr; }
+}
+
+/* --- SEARCH BAR --- */
+.search-container {
+    max-width: 500px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px 20px;
+    background: #1e1e26;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+#searchInput:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+/* Animasi untuk hasil pencarian kosong */
+.no-results {
+    text-align: center;
+    color: var(--text-sec);
+    grid-column: 1 / -1;
+    padding: 40px;
 }
