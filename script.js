@@ -20,8 +20,8 @@ const games = [
     },
     {
         id: 2,
-        title: "KEinsdfat",
-        genre: "Action",
+        title: "Konz",
+        genre: "Action", "RPG",
         releaseDate: "20 Mei 2024",
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
