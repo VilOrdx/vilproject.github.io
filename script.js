@@ -96,20 +96,33 @@ function showDetail(gameId) {
                     </div>
                     
                     <div class="download-box">
-    <p style="margin-bottom: 10px; font-size: 0.9rem; font-weight: bold;">UNDUH GAME:</p>
-    
-    ${game.downloadWindows ? `
-        <a href="${game.downloadWindows}" class="play-btn" style="background: #0078d4; color: white; border: none; margin-bottom: 10px;">
-            Download for Windows (PC)
-        </a>
-    ` : ''}
+detailContent.innerHTML = `
+    <div class="detail-side">
+        <div class="detail-info-card">
+            <div class="download-box">
+                <p style="margin-bottom: 15px; font-size: 0.8rem; color: var(--text-sec); font-weight: bold; letter-spacing: 1px;">
+                    AVAILABLE ON:
+                </p>
+                
+                ${game.downloadWindows ? `
+                    <a href="${game.downloadWindows}" class="btn-dl btn-windows" target="_blank">
+                        <i class="fa-brands fa-windows"></i>
+                        <span>Windows (.exe)</span>
+                    </a>
+                ` : ''}
 
-    ${game.downloadAndroid ? `
-        <a href="${game.downloadAndroid}" class="play-btn" style="background: #3DDC84; color: #000; border: none;">
-            Download for Android (APK)
-        </a>
-    ` : ''}
-</div>
+                ${game.downloadAndroid ? `
+                    <a href="${game.downloadAndroid}" class="btn-dl btn-android" target="_blank">
+                        <i class="fa-brands fa-android"></i>
+                        <span>Android (.apk)</span>
+                    </a>
+                ` : ''}
+                
+                ${!game.downloadWindows && !game.downloadAndroid ? 
+                    '<p style="color:var(--text-sec); font-style:italic;">Coming soon...</p>' : ''}
+            </div>
+        </div>
+    </div>
                 </div>
             </div>
         </div>
