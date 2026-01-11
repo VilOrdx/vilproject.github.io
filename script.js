@@ -96,20 +96,20 @@ function showDetail(gameId) {
                     </div>
                     
                     <div class="download-box">
-    <p style="margin-bottom: 10px; font-size: 0.9rem; font-weight: bold;">UNDUH GAME:</p>
-    
-    ${game.downloadWindows ? `
-        <a href="${game.downloadWindows}" class="play-btn" style="background: #0078d4; color: white; border: none; margin-bottom: 10px;">
-            Download for Windows (PC)
-        </a>
-    ` : ''}
-
-    ${game.downloadAndroid ? `
-        <a href="${game.downloadAndroid}" class="play-btn" style="background: #3DDC84; color: #000; border: none;">
-            Download for Android (APK)
-        </a>
-    ` : ''}
-</div>
+                    <p style="margin-bottom: 10px; font-size: 0.9rem; font-weight: bold;">UNDUH GAME:</p>
+                    
+                    ${game.downloadWindows ? `
+                        <a href="${game.downloadWindows}" class="play-btn" style="background: #0078d4; color: white; border: none; margin-bottom: 10px;">
+                            Download for Windows (PC)
+                        </a>
+                    ` : ''}
+                
+                    ${game.downloadAndroid ? `
+                        <a href="${game.downloadAndroid}" class="play-btn" style="background: #3DDC84; color: #000; border: none;">
+                            Download for Android (APK)
+                        </a>
+                    ` : ''}
+                </div>
                 </div>
             </div>
         </div>
