@@ -250,9 +250,9 @@ function renderComments() {
 
 function deleteComment(index) {
     // Ganti 'admin123' dengan password yang kamu inginkan
-    const password = prompt("vilganteng");
+    const password = prompt("Masukkan Kode Admin untuk menghapus komentar:");
 
-    if (password === "admin123") { // <-- GANTI PASSWORD DISINI
+    if (password === "vilganteng") { // <-- GANTI PASSWORD DISINI
         let allComments = JSON.parse(localStorage.getItem('gameVaultComments')) || [];
         
         // Hapus 1 item berdasarkan index
