@@ -11,29 +11,33 @@
     <nav>
         <div class="logo">GAME<span style="color:white">VAULT</span></div>
         <div class="nav-links">
-            <a href="#">Games</a>
-            <a href="#">Updates</a>
+            <a href="#" onclick="showHome()">Home</a>
             <a href="javascript:void(0)" class="btn-donate" onclick="toggleModal()">Donate ☕</a>
         </div>
     </nav>
 
-    <header>
-        <h1>My Game Collection</h1>
-        <p style="color: var(--text-sec)">Eksplorasi proyek game terbaru saya</p>
-    </header>
+    <div id="homePage">
+        <header>
+            <h1>My Game Collection</h1>
+            <p style="color: var(--text-sec)">Eksplorasi proyek game terbaru saya</p>
+        </header>
 
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterGames('all', this)">All Games</button>
-        <button class="filter-btn" onclick="filterGames('Action', this)">Action</button>
-        <button class="filter-btn" onclick="filterGames('RPG', this)">RPG</button>
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterGames('all', this)">All Games</button>
+            <button class="filter-btn" onclick="filterGames('Action', this)">Action</button>
+            <button class="filter-btn" onclick="filterGames('RPG', this)">RPG</button>
+        </div>
+
+        <div class="game-grid" id="gameContainer"></div>
     </div>
 
-    <div class="game-grid" id="gameContainer"></div>
+    <div id="detailPage" style="display: none;">
+        <div id="detailContent"></div>
+    </div>
 
     <div class="modal" id="donateModal">
         <div class="modal-content">
             <h2>Support My Work ☕</h2>
-            <p style="color: var(--text-sec); margin: 15px 0;">Terima kasih sudah ingin membantu pengembangan game saya!</p>
             <p><strong>Trakteer / Saweria:</strong><br> @usernamekamu</p>
             <span class="close-modal" onclick="toggleModal()">Tutup</span>
         </div>
