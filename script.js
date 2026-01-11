@@ -13,6 +13,7 @@ const games = [
             "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500",
             "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500",
             "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=500"
+        ],
         desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
         downloadWindows: "https://link-download-windows.com",
@@ -31,6 +32,7 @@ const games = [
             "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500",
             "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500",
             "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=500"
+        ],
         desc: "Pertempuran pedang di masa depan dengan grafik neon yang memukau...",
         image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
         downloadWindows: "https://link-download-windows.com",
@@ -49,6 +51,7 @@ const games = [
             "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500",
             "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500",
             "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=500"
+        ],
         desc: "Jelajahi galaksi dan kalahkan monster alien dalam RPG turn-based ini...",
         image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
         downloadWindows: null, 
