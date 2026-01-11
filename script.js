@@ -3,7 +3,7 @@ const games = [
     {
         id: 1,
         title: "Neon Knight",
-        genre: ["Visual Novel", "Netorare"],
+        genre: ["Visual Novel"], ["Netorare"],
         releaseDate: "20 Mei 2024",
         developedBy: "Nama Kamu",
         platforms: "Android, PC/Windows",
@@ -31,7 +31,7 @@ const games = [
     {
         id: 3,
         title: "Galaxy Raiders",
-        genre: ["NTR", "Visual Novel"],
+        genre: ["NTR"], ["Visual Novel"],
         releaseDate: "25 Juni 2024",
         developedBy: "Nama Kamu",
         platforms: "Android",
