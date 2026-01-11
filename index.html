@@ -4,121 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameVault | Portfolio</title>
-    <style>
-        :root {
-            --bg-color: #0b0b0f;
-            --card-bg: #16161f;
-            --text-main: #ffffff;
-            --text-sec: #94a3b8;
-            --accent: #00f2ff; /* Cyan Neon */
-            --accent-purple: #8c52ff;
-            --new-tag: #22c55e;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
-        
-        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
-
-        /* --- NAVBAR --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(11, 11, 15, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; color: var(--accent); }
-
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-sec); font-size: 0.9rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-
-        .btn-donate {
-            background: var(--accent-purple);
-            color: white !important;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            box-shadow: 0 0 15px rgba(140, 82, 255, 0.4);
-        }
-
-        /* --- HERO --- */
-        header { text-align: center; padding: 80px 20px 40px; }
-        h1 { font-size: 3.5rem; margin-bottom: 10px; background: linear-gradient(to right, #fff, #8c52ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* --- FILTER --- */
-        .filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
-        .filter-btn {
-            background: #1e1e26; border: none; color: var(--text-sec);
-            padding: 8px 20px; border-radius: 8px; cursor: pointer; transition: 0.3s;
-        }
-        .filter-btn.active { background: var(--accent); color: #000; font-weight: bold; }
-
-        /* --- GRID & CARDS --- */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
-        }
-
-        .game-card {
-            background: var(--card-bg); border-radius: 16px; overflow: hidden;
-            position: relative; border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .game-card:hover { transform: translateY(-8px); border-color: var(--accent); }
-
-        .image-container { position: relative; width: 100%; height: 190px; }
-        .card-img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Label Update/New */
-        .badge-new {
-            position: absolute; top: 12px; left: 12px;
-            background: var(--new-tag); color: #000; font-size: 0.7rem;
-            font-weight: 800; padding: 4px 10px; border-radius: 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .card-content { padding: 20px; }
-        .card-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .genre-tag { color: var(--accent); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .post-date { color: var(--text-sec); font-size: 0.75rem; }
-
-        .game-title { font-size: 1.4rem; margin-bottom: 8px; }
-        .game-desc { color: var(--text-sec); font-size: 0.9rem; margin-bottom: 20px; height: 4.5em; overflow: hidden; }
-
-        .play-btn {
-            display: block; width: 100%; text-align: center;
-            background: transparent; border: 1px solid var(--accent); color: var(--accent);
-            padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600;
-            transition: 0.3s;
-        }
-        .play-btn:hover { background: var(--accent); color: #000; }
-
-        /* --- MODAL DONASI --- */
-        .modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background: var(--card-bg); padding: 40px; border-radius: 20px;
-            max-width: 400px; text-align: center; border: 1px solid var(--accent-purple);
-        }
-        .close-modal { margin-top: 20px; cursor: pointer; color: var(--text-sec); display: block; }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .game-card { animation: fadeInUp 0.5s ease forwards; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -142,8 +28,7 @@
         <button class="filter-btn" onclick="filterGames('RPG', this)">RPG</button>
     </div>
 
-    <div class="game-grid" id="gameContainer">
-        </div>
+    <div class="game-grid" id="gameContainer"></div>
 
     <div class="modal" id="donateModal">
         <div class="modal-content">
@@ -154,77 +39,6 @@
         </div>
     </div>
 
-    <script>
-        const games = [
-            {
-                title: "Neon Knight",
-                genre: "Action",
-                date: "2024-05-20",
-                isNew: true,
-                desc: "Pertempuran pedang di masa depan yang penuh dengan lampu neon.",
-                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&q=80",
-                link: "#"
-            },
-            {
-                title: "Pixel Quest",
-                genre: "RPG",
-                date: "2024-04-15",
-                isNew: false,
-                desc: "RPG klasik bergaya 8-bit dengan cerita yang mendalam dan quest unik.",
-                image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=500&q=80",
-                link: "#"
-            },
-            {
-                title: "Shadow Runner",
-                genre: "Action",
-                date: "2024-05-25",
-                isNew: true,
-                desc: "Lari secepat mungkin melewati bayangan musuh tanpa terdeteksi.",
-                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&q=80",
-                link: "#"
-            }
-        ];
-
-        function displayGames(category) {
-            const container = document.getElementById('gameContainer');
-            container.innerHTML = '';
-
-            const filtered = category === 'all' ? games : games.filter(g => g.genre === category);
-
-            filtered.forEach((game) => {
-                container.innerHTML += `
-                    <div class="game-card">
-                        <div class="image-container">
-                            ${game.isNew ? '<span class="badge-new">NEW UPDATE</span>' : ''}
-                            <img src="${game.image}" class="card-img" alt="${game.title}">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">
-                                <span class="genre-tag">${game.genre}</span>
-                                <span class="post-date">${game.date}</span>
-                            </div>
-                            <h3 class="game-title">${game.title}</h3>
-                            <p class="game-desc">${game.desc}</p>
-                            <a href="${game.link}" class="play-btn">Play Game</a>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function filterGames(category, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            displayGames(category);
-        }
-
-        function toggleModal() {
-            const modal = document.getElementById('donateModal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        // Inisialisasi
-        displayGames('all');
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
