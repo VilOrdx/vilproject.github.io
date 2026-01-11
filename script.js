@@ -157,16 +157,18 @@ function showDetail(gameId) {
 
     const detailContent = document.getElementById('detailContent');
     
-    // Logika untuk menampilkan screenshots jika ada
+    // Tampilan Slider Preview yang Baru
     let screenshotHTML = "";
     if (game.screenshots && game.screenshots.length > 0) {
         screenshotHTML = `
-            <div class="preview-section" style="margin-top: 30px;">
-                <h3 style="margin-bottom: 15px; color: var(--accent);">GAME PREVIEW</h3>
-                <div class="screenshot-gallery" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px;">
+            <div class="preview-slider-container">
+                <div class="gallery-nav-hint">
+                    <h3 style="color: var(--accent); font-size: 1rem;">GAME PREVIEW</h3>
+                    <span>Geser ke samping ➔</span>
+                </div>
+                <div class="screenshot-gallery">
                     ${game.screenshots.map(img => `
-                        <img src="${img}" class="preview-img" 
-                             style="width: 250px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                        <img src="${img}" class="preview-img" alt="Screenshot" 
                              onclick="window.open('${img}', '_blank')">
                     `).join('')}
                 </div>
@@ -174,6 +176,7 @@ function showDetail(gameId) {
         `;
     }
 
+    // Render HTML Detail Utama
     detailContent.innerHTML = `
         <button class="btn-back" onclick="showHome()">← Kembali ke Home</button>
         
@@ -217,8 +220,8 @@ function showDetail(gameId) {
                         <p style="margin-bottom: 15px; font-size: 0.9rem; font-weight: bold; color: white;">
                             UNDUH GAME SEKARANG:
                         </p>
-                        ${game.downloadWindows ? `<a href="${game.downloadWindows}" target="_blank" class="btn-dl btn-windows"><i class="fa-brands fa-windows"></i> Download for Windows</a>` : ''}
-                        ${game.downloadAndroid ? `<a href="${game.downloadAndroid}" target="_blank" class="btn-dl btn-android"><i class="fa-brands fa-android"></i> Download for Android</a>` : ''}
+                        ${game.downloadWindows ? `<a href="${game.downloadWindows}" target="_blank" class="btn-dl btn-windows">Download for Windows</a>` : ''}
+                        ${game.downloadAndroid ? `<a href="${game.downloadAndroid}" target="_blank" class="btn-dl btn-android">Download for Android</a>` : ''}
                     </div>
                 </div>
             </div>
