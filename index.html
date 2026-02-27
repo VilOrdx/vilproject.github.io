@@ -3,88 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProjectVil | Forum</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Ren'Py Web Tools | Unrpa & Unrpyc</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --bg-color: #121212;
+            --card-bg: #1E1E1E;
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0A0;
+            --hover-color: #357ABD;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        .tools-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .tool-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            flex: 1 1 300px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #333;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h2 {
+            margin: 0 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .tool-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .file-input-wrapper {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            background-color: #2D2D2D;
+            border: 2px dashed #555;
+            padding: 1rem;
+            display: block;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: border-color 0.3s ease;
+        }
+
+        .file-label:hover {
+            border-color: var(--primary);
+            color: var(--text-main);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--hover-color);
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">PROJECT<span style="color:white">VIL</span></div>
-        <div class="nav-links">
-            <a href="#" onclick="showHome()">Home</a>
-            <a href="javascript:void(0)" class="btn-donate" onclick="toggleModal()">Donate ☕</a>
-        </div>
-    </nav>
+    <header>
+        <h1>Ren'Py Web Tools</h1>
+        <p>Ekstrak dan Dekompilasi file game Ren'Py dengan mudah</p>
+    </header>
 
-<div class="hero-slider" id="heroSlider">
-    <div class="slides-container" id="slidesContainer">
-        </div>
-    
-    <button class="slider-nav prev" onclick="changeSlide(-1)">&#10094;</button>
-    <button class="slider-nav next" onclick="changeSlide(1)">&#10095;</button>
-
-    <div class="slider-dots" id="sliderDots">
-        </div>
-</div>
-    
-    <div id="homePage">
-        <header>
-            <h1>My Game Collection</h1>
-            <p style="color: var(--text-sec)">Eksplorasi proyek translation game terbaru saya</p>
-        </header>
-        
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Cari judul game..." onkeyup="searchGames()">
-        </div>
-        
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterGames('all', this)">All Games</button>
-            <button class="filter-btn" onclick="filterGames('Visual Novel', this)">Visual Novel</button>
-            <button class="filter-btn" onclick="filterGames('Sandbox', this)">Sandbox</button>
-        </div>
-
-        <div class="game-grid" id="gameContainer"></div>
-    </div>
-
-    <div id="detailPage" style="display: none;">
-        <div id="detailContent"></div>
-        <div class="comment-section">
-            <h3><i class="fa-solid fa-comments"></i> Komentar Publik</h3>
+    <div class="tools-container">
+        <div class="tool-card">
+            <div class="tool-icon">📦</div>
+            <h2>Unrpa Extractor</h2>
+            <p>Ekstrak aset game (gambar, audio, dll) dari file arsip <strong>.rpa</strong>.</p>
             
-            <div class="comment-form">
-                <input type="text" id="commenterName" placeholder="Nama kamu...">
-                <textarea id="commentText" placeholder="Tulis komentar atau kesanmu tentang game ini..."></textarea>
-                <button onclick="addComment()">Kirim Komentar</button>
+            <div class="file-input-wrapper">
+                <label for="rpa-upload" class="file-label" id="rpa-label">
+                    Pilih File .rpa
+                </label>
+                <input type="file" id="rpa-upload" accept=".rpa" onchange="updateLabel('rpa-upload', 'rpa-label')">
             </div>
-        
-            <div id="commentList">
-                </div>
-        </div>
-    </div>
 
-    <div class="modal" id="donateModal">
-        <div class="modal-content">
-            <div style="font-size: 3rem; margin-bottom: 10px;">☕</div>
-            <h2>Support My Work</h2>
-            <p style="color: var(--text-sec); margin-bottom: 20px;">
-                Terima kasih banyak atas dukungannya untuk translation game saya!
-            </p>
+            <button class="btn" onclick="processFile('rpa-upload', 'Mengekstrak file RPA...')">Ekstrak Archive</button>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">📜</div>
+            <h2>Unrpyc Decompiler</h2>
+            <p>Dekompilasi script game dari format <strong>.rpyc</strong> kembali menjadi format <strong>.rpy</strong> yang bisa dibaca.</p>
             
-            <div class="donation-links">
-                <a href="https://trakteer.id/Vil_Ordx" target="_blank" class="btn-donate-link btn-trakteer">
-                    Dukung via Trakteer
-                </a>
-                
-                <a href="https://saweria.co/vilordx" target="_blank" class="btn-donate-link btn-saweria">
-                    Dukung via Saweria
-                </a>
+            <div class="file-input-wrapper">
+                <label for="rpyc-upload" class="file-label" id="rpyc-label">
+                    Pilih File .rpyc
+                </label>
+                <input type="file" id="rpyc-upload" accept=".rpyc" onchange="updateLabel('rpyc-upload', 'rpyc-label')">
             </div>
-            
-            <span class="close-modal" onclick="toggleModal()">Nanti Saja</span>
+
+            <button class="btn" onclick="processFile('rpyc-upload', 'Mendekompilasi file RPYC...')">Decompile Script</button>
         </div>
     </div>
-    </div>
 
-    <script src="script.js"></script>
+    <footer>
+        &copy; 2026 Ren'Py Tools Dashboard. (Mockup UI)
+    </footer>
+
+    <script>
+        // Fungsi untuk mengupdate teks saat file dipilih
+        function updateLabel(inputId, labelId) {
+            const input = document.getElementById(inputId);
+            const label = document.getElementById(labelId);
+            if (input.files.length > 0) {
+                label.innerHTML = `File terpilih:<br><strong>${input.files[0].name}</strong>`;
+                label.style.borderColor = "var(--primary)";
+                label.style.color = "var(--text-main)";
+            } else {
+                label.innerHTML = inputId.includes('rpa') ? "Pilih File .rpa" : "Pilih File .rpyc";
+                label.style.borderColor = "#555";
+            }
+        }
+
+        // Fungsi simulasi proses
+        function processFile(inputId, message) {
+            const file = document.getElementById(inputId).files[0];
+            if (!file) {
+                alert("Harap pilih file terlebih dahulu!");
+                return;
+            }
+            // Ini hanya simulasi frontend
+            alert(`${message}\n\n[Sistem]: Memproses ${file.name}...\n\nCatatan: Untuk membuat ini benar-benar bekerja, kamu perlu menghubungkan halaman ini ke server backend Python yang menjalankan script unrpa/unrpyc.`);
+        }
+    </script>
 </body>
 </html>
