@@ -243,11 +243,17 @@
     </footer>
 
     <script>
+        // Variabel global untuk mencegah progress bar bertabrakan
+        let currentInterval = null; 
+
         function updateLabel(inputId, labelId) {
             const input = document.getElementById(inputId);
             const label = document.getElementById(labelId);
-            if (input.files.length > 0) {
-                label.innerHTML = `File terpilih:<br><strong>${input.files.name}</strong>`;
+            
+            // Cek memastikan file benar-benar ada untuk mencegah undefined
+            if (input && input.files && input.files.length > 0) {
+                const fileName = input.files[0].name || "File tidak diketahui";
+                label.innerHTML = `File terpilih:<br><strong>${fileName}</strong>`;
                 label.style.borderColor = "var(--primary)";
                 label.style.color = "var(--text-main)";
             } else {
@@ -258,13 +264,11 @@
 
         function showMessage(msgId, text, isError) {
             const msgBox = document.getElementById(msgId);
+            if (!msgBox) return; // Mencegah error jika ID tidak ditemukan
+            
             msgBox.style.display = "block";
             msgBox.innerHTML = text;
-            if (isError) {
-                msgBox.className = "alert-message alert-error";
-            } else {
-                msgBox.className = "alert-message alert-success";
-            }
+            msgBox.className = isError ? "alert-message alert-error" : "alert-message alert-success";
         }
 
         function processFile(inputId, expectedExt, progContainerId, progBarId, msgId, btnId) {
@@ -274,57 +278,69 @@
             const progBar = document.getElementById(progBarId);
             const btn = document.getElementById(btnId);
 
-            // Sembunyikan pesan dan reset progress sebelumnya
-            msgBox.style.display = "none";
-            progContainer.style.display = "none";
-            progBar.style.width = "0%";
-            progBar.innerHTML = "0%";
+            // 1. Reset tampilan UI & Progress Bar
+            if (msgBox) msgBox.style.display = "none";
+            if (progContainer) progContainer.style.display = "none";
+            if (progBar) {
+                progBar.style.width = "0%";
+                progBar.innerHTML = "0%";
+                progBar.style.backgroundColor = "var(--primary)"; // Memastikan warna kembali biru
+            }
 
-            // 1. Cek apakah file sudah dipilih
-            if (fileInput.files.length === 0) {
+            // 2. Cek apakah file kosong atau tidak terbaca
+            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
                 showMessage(msgId, "Error: Harap pilih file terlebih dahulu!", true);
                 return;
             }
 
-            const file = fileInput.files;
-            const fileName = file.name;
+            const file = fileInput.files[0];
+            const fileName = file.name || "File_Tanpa_Nama";
 
-            // 2. Cek ekstensi file
+            // 3. Cek validasi ekstensi file
             if (!fileName.toLowerCase().endsWith(`.${expectedExt}`)) {
                 showMessage(msgId, `Error: Ekstensi file tidak valid. Harap gunakan file .${expectedExt}`, true);
                 return;
             }
 
-            // Jika validasi lolos, mulai simulasi proses
-            btn.disabled = true;
-            btn.innerHTML = "Memproses...";
-            progContainer.style.display = "block";
+            // 4. Kunci tombol dan mulai simulasi
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = "Memproses...";
+            }
+            if (progContainer) progContainer.style.display = "block";
             
             let progress = 0;
-            const interval = setInterval(() => {
-                // Tambah progress secara acak agar terlihat natural
+            if (currentInterval) clearInterval(currentInterval); // Hapus proses lama jika ada
+
+            currentInterval = setInterval(() => {
                 progress += Math.floor(Math.random() * 15) + 5; 
-                
                 if (progress > 100) progress = 100;
                 
-                progBar.style.width = `${progress}%`;
-                progBar.innerHTML = `${progress}%`;
+                if (progBar) {
+                    progBar.style.width = `${progress}%`;
+                    progBar.innerHTML = `${progress}%`;
+                }
 
-                // 3. Simulasi error acak saat proses berlangsung (10% peluang error)
+                // Simulasi error acak (10% peluang gagal)
                 if (progress > 30 && progress < 80 && Math.random() < 0.1) {
-                    clearInterval(interval);
-                    btn.disabled = false;
-                    btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
+                    clearInterval(currentInterval);
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
+                    }
                     showMessage(msgId, "Error Sistem: File korup atau proses terputus secara tidak terduga.", true);
-                    progBar.style.background = "var(--error-color)";
+                    if (progBar) progBar.style.backgroundColor = "var(--error-color)";
                     return;
                 }
 
+                // Proses Sukses
                 if (progress === 100) {
-                    clearInterval(interval);
-                    btn.disabled = false;
-                    btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
-                    progBar.style.background = "var(--success-color)";
+                    clearInterval(currentInterval);
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
+                    }
+                    if (progBar) progBar.style.backgroundColor = "var(--success-color)";
                     
                     const successMsg = expectedExt === 'rpa' 
                         ? `Sukses mengekstrak <strong>${fileName}</strong>!` 
@@ -332,7 +348,7 @@
                     
                     showMessage(msgId, successMsg, false);
                 }
-            }, 400); // Update setiap 400ms
+            }, 400); 
         }
     </script>
 </body>
