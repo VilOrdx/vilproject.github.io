@@ -182,7 +182,7 @@
             background-color: #1A251E;
             border: 1px solid var(--success-color);
             border-radius: 8px;
-            display: none; /* Disembunyikan secara default */
+            display: none; 
             flex-direction: column;
             gap: 0.8rem;
             animation: fadeIn 0.5s ease;
@@ -253,8 +253,8 @@
 
             <div class="download-area" id="rpa-download-area">
                 <p>✅ Ekstraksi Selesai!</p>
-                <button class="btn-download" onclick="simulasiDownload('Hasil_Ekstrak.zip')">
-                    ⬇️ Download Hasil Ekstrak (.zip)
+                <button class="btn-download" id="rpa-download-btn">
+                    ⬇️ Download Hasil Ekstrak
                 </button>
             </div>
         </div>
@@ -276,8 +276,8 @@
 
             <div class="download-area" id="rpyc-download-area">
                 <p>✅ Dekompilasi Selesai!</p>
-                <button class="btn-download" onclick="simulasiDownload(document.getElementById('rpyc-filename-display').innerText)">
-                    ⬇️ Download <span id="rpyc-filename-display" style="margin-left: 5px;">file.rpy</span>
+                <button class="btn-download" id="rpyc-download-btn">
+                    ⬇️ Download file.rpy
                 </button>
             </div>
         </div>
@@ -288,35 +288,37 @@
     </footer>
 
     <script>
-        let intervals = {}; // Menyimpan interval per-kartu agar tidak bertabrakan
+        let intervals = {}; // Simpan proses agar tidak tumpang tindih
 
+        // Fungsi saat file dipilih
         function updateLabel(inputId, labelId) {
             const input = document.getElementById(inputId);
             const label = document.getElementById(labelId);
             
-            if (input && input.files && input.files.length > 0) {
-                const fileName = input.files.name || "File tidak diketahui";
-                label.innerHTML = `File terpilih:<br><strong>${fileName}</strong>`;
+            if (input.files && input.files.length > 0) {
+                const fileName = input.files.name;
+                label.innerHTML = `File terpilih:<br><strong style="color: var(--primary);">${fileName}</strong>`;
                 label.style.borderColor = "var(--primary)";
-                label.style.color = "var(--text-main)";
             } else {
                 label.innerHTML = inputId.includes('rpa') ? "Pilih File .rpa" : "Pilih File .rpyc";
                 label.style.borderColor = "#555";
             }
         }
 
+        // Fungsi pesan error/sukses
         function showMessage(msgId, text, isError) {
             const msgBox = document.getElementById(msgId);
-            if (!msgBox) return;
             msgBox.style.display = "block";
             msgBox.innerHTML = text;
             msgBox.className = isError ? "alert-message alert-error" : "alert-message alert-success";
         }
 
+        // Fungsi Pop-up Download
         function simulasiDownload(namaFile) {
-            alert(`Mendownload file: ${namaFile} ...\n\n(Ini hanya simulasi UI frontend. Di versi aslinya, ini akan memicu unduhan file dari servermu.)`);
+            alert(`Mendownload file: ${namaFile} ...\n\n(Ini adalah simulasi klik download)`);
         }
 
+        // Fungsi Utama Proses
         function processFile(inputId, expectedExt, progContainerId, progBarId, msgId, btnId, downloadAreaId) {
             const fileInput = document.getElementById(inputId);
             const msgBox = document.getElementById(msgId);
@@ -325,80 +327,73 @@
             const btn = document.getElementById(btnId);
             const downloadArea = document.getElementById(downloadAreaId);
 
-            // 1. Reset tampilan
-            if (msgBox) msgBox.style.display = "none";
-            if (progContainer) progContainer.style.display = "none";
-            if (downloadArea) downloadArea.style.display = "none"; // Sembunyikan menu download saat mulai baru
-            if (progBar) {
-                progBar.style.width = "0%";
-                progBar.innerHTML = "0%";
-                progBar.style.backgroundColor = "var(--primary)";
-            }
+            // 1. Reset tampilan awal
+            msgBox.style.display = "none";
+            progContainer.style.display = "none";
+            downloadArea.style.display = "none";
+            progBar.style.width = "0%";
+            progBar.innerHTML = "0%";
+            progBar.style.backgroundColor = "var(--primary)";
 
-            // 2. Cek file
-            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            // 2. Cek apakah ada file
+            if (!fileInput.files || fileInput.files.length === 0) {
                 showMessage(msgId, "Error: Harap pilih file terlebih dahulu!", true);
                 return;
             }
 
-            const fileName = fileInput.files.name || "File_Tanpa_Nama";
+            // Ambil nama file dari input
+            const fileName = fileInput.files.name;
 
-            // 3. Cek validasi ekstensi
+            // 3. Cek format file (Harus .rpa atau .rpyc)
             if (!fileName.toLowerCase().endsWith(`.${expectedExt}`)) {
-                showMessage(msgId, `Error: Ekstensi file tidak valid. Harap gunakan file .${expectedExt}`, true);
+                showMessage(msgId, `Error: Ekstensi file salah. Harap unggah file <strong>.${expectedExt}</strong>`, true);
                 return;
             }
 
-            // 4. Kunci tombol dan jalankan simulasi
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = "Memproses...";
-            }
-            if (progContainer) progContainer.style.display = "block";
+            // 4. Mulai Proses Simulasi
+            btn.disabled = true;
+            btn.innerHTML = "Memproses...";
+            progContainer.style.display = "block";
             
             let progress = 0;
             if (intervals[inputId]) clearInterval(intervals[inputId]);
 
             intervals[inputId] = setInterval(() => {
-                progress += Math.floor(Math.random() * 20) + 10; 
+                progress += Math.floor(Math.random() * 20) + 10; // Tambah progress
                 if (progress > 100) progress = 100;
                 
-                if (progBar) {
-                    progBar.style.width = `${progress}%`;
-                    progBar.innerHTML = `${progress}%`;
-                }
+                progBar.style.width = `${progress}%`;
+                progBar.innerHTML = `${progress}%`;
 
-                // Peluang Error 10%
-                if (progress > 40 && progress < 80 && Math.random() < 0.1) {
-                    clearInterval(intervals[inputId]);
-                    if (btn) {
-                        btn.disabled = false;
-                        btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
-                    }
-                    showMessage(msgId, "Error Sistem: File korup atau proses gagal.", true);
-                    if (progBar) progBar.style.backgroundColor = "var(--error-color)";
-                    return;
-                }
-
-                // Sukses 100%
+                // 5. Sukses 100%
                 if (progress === 100) {
                     clearInterval(intervals[inputId]);
-                    if (btn) {
-                        btn.disabled = false;
-                        btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
-                    }
-                    if (progBar) progBar.style.backgroundColor = "var(--success-color)";
+                    btn.disabled = false;
+                    btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
+                    progBar.style.backgroundColor = "var(--success-color)";
                     
-                    // Tampilkan Menu Download
-                    if (downloadArea) downloadArea.style.display = "flex";
+                    showMessage(msgId, `Berhasil memproses <strong>${fileName}</strong>!`, false);
+                    downloadArea.style.display = "flex";
 
-                    // Ganti nama dari .rpyc ke .rpy untuk tombol download
+                    // Atur nama file di tombol download
                     if (expectedExt === 'rpyc') {
+                        // Ubah nama .rpyc jadi .rpy
                         const namaRpy = fileName.replace(/\.rpyc$/i, '.rpy');
-                        document.getElementById('rpyc-filename-display').innerText = namaRpy;
+                        const rpycDownloadBtn = document.getElementById('rpyc-download-btn');
+                        
+                        rpycDownloadBtn.innerHTML = `⬇️ Download <strong>${namaRpy}</strong>`;
+                        rpycDownloadBtn.onclick = function() { simulasiDownload(namaRpy); };
+                    } 
+                    else if (expectedExt === 'rpa') {
+                        // Ubah nama .rpa jadi .zip
+                        const namaZip = fileName.replace(/\.rpa$/i, '.zip');
+                        const rpaDownloadBtn = document.getElementById('rpa-download-btn');
+                        
+                        rpaDownloadBtn.innerHTML = `⬇️ Download <strong>${namaZip}</strong>`;
+                        rpaDownloadBtn.onclick = function() { simulasiDownload(namaZip); };
                     }
                 }
-            }, 300); 
+            }, 300); // Kecepatan loading
         }
     </script>
 </body>
