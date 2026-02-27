@@ -28,204 +28,75 @@
             min-height: 100vh;
         }
 
-        header {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            color: var(--primary);
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-top: 0.5rem;
-        }
+        header { text-align: center; padding: 3rem 1rem 2rem; }
+        header h1 { margin: 0; font-size: 2.5rem; color: var(--primary); }
+        header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
 
         .tools-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-            padding: 2rem;
-            max-width: 900px;
-            width: 100%;
+            display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;
+            padding: 2rem; max-width: 900px; width: 100%;
         }
 
         .tool-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            flex: 1 1 300px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #333;
+            background-color: var(--card-bg); border-radius: 12px; padding: 2rem;
+            flex: 1 1 300px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: center; border: 1px solid #333;
         }
 
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+        .tool-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .tool-card h2 { margin: 0 0 1rem; font-size: 1.5rem; }
+        .tool-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
 
-        .tool-card h2 {
-            margin: 0 0 1rem;
-            font-size: 1.5rem;
-        }
-
-        .tool-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
-
-        .file-input-wrapper {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
+        .file-input-wrapper { margin-bottom: 1.5rem; }
+        input[type="file"] { display: none; }
+        
         .file-label {
-            background-color: #2D2D2D;
-            border: 2px dashed #555;
-            padding: 1rem;
-            display: block;
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: border-color 0.3s ease;
+            background-color: #2D2D2D; border: 2px dashed #555; padding: 1rem;
+            display: block; border-radius: 8px; cursor: pointer; color: var(--text-muted);
         }
-
-        .file-label:hover {
-            border-color: var(--primary);
-            color: var(--text-main);
-        }
+        .file-label:hover { border-color: var(--primary); color: var(--text-main); }
 
         .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s ease;
+            background-color: var(--primary); color: white; border: none;
+            padding: 0.8rem 2rem; border-radius: 6px; font-size: 1rem;
+            font-weight: bold; cursor: pointer; width: 100%;
         }
-
-        .btn:hover {
-            background-color: var(--hover-color);
-        }
-
-        .btn:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
+        .btn:disabled { background-color: #555; cursor: not-allowed; }
 
         /* Progress Bar */
         .progress-container {
-            width: 100%;
-            background-color: #333;
-            border-radius: 6px;
-            margin-top: 1rem;
-            height: 20px;
-            display: none;
-            overflow: hidden;
+            width: 100%; background-color: #333; border-radius: 6px;
+            margin-top: 1rem; height: 20px; display: none; overflow: hidden;
         }
-
         .progress-bar {
-            height: 100%;
-            width: 0%;
-            background-color: var(--primary);
-            color: white;
-            font-size: 0.75rem;
-            font-weight: bold;
-            line-height: 20px;
-            text-align: center;
-            transition: width 0.3s ease;
+            height: 100%; width: 0%; background-color: var(--primary); color: white;
+            font-size: 0.75rem; font-weight: bold; line-height: 20px; text-align: center;
         }
 
-        /* Alert Message */
+        /* Alert */
         .alert-message {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            display: none;
-            font-weight: bold;
+            margin-top: 1rem; padding: 0.8rem; border-radius: 6px;
+            font-size: 0.9rem; display: none; font-weight: bold;
         }
+        .alert-error { background-color: rgba(231, 76, 60, 0.2); color: var(--error-color); border: 1px solid var(--error-color); }
+        .alert-success { background-color: rgba(46, 204, 113, 0.2); color: var(--success-color); border: 1px solid var(--success-color); }
 
-        .alert-error {
-            background-color: rgba(231, 76, 60, 0.2);
-            color: var(--error-color);
-            border: 1px solid var(--error-color);
-        }
-
-        .alert-success {
-            background-color: rgba(46, 204, 113, 0.2);
-            color: var(--success-color);
-            border: 1px solid var(--success-color);
-        }
-
-        /* Download Area Styles */
+        /* Download Area */
         .download-area {
-            margin-top: 1rem;
-            padding: 1rem;
-            background-color: #1A251E;
-            border: 1px solid var(--success-color);
-            border-radius: 8px;
-            display: none; 
-            flex-direction: column;
-            gap: 0.8rem;
-            animation: fadeIn 0.5s ease;
+            margin-top: 1rem; padding: 1rem; background-color: #1A251E;
+            border: 1px solid var(--success-color); border-radius: 8px;
+            display: none; flex-direction: column; gap: 0.8rem;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .download-area p {
-            margin: 0;
-            color: var(--success-color);
-            font-weight: bold;
-        }
-
+        .download-area p { margin: 0; color: var(--success-color); font-weight: bold; }
+        
         .btn-download {
-            background-color: var(--success-color);
-            color: #121212;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            background-color: var(--success-color); color: #121212; border: none;
+            padding: 0.8rem; border-radius: 6px; font-weight: bold; font-size: 0.95rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
         }
+        .btn-download:hover { background-color: #27AE60; color: white; }
 
-        .btn-download:hover {
-            background-color: #27AE60;
-            color: white;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 2rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        footer { margin-top: auto; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -239,22 +110,22 @@
         <div class="tool-card">
             <div class="tool-icon">📦</div>
             <h2>Unrpa Extractor</h2>
-            <p>Ekstrak aset game (gambar, audio, dll) dari file arsip <strong>.rpa</strong>.</p>
+            <p>Ekstrak aset game dari arsip <strong>.rpa</strong>.</p>
             
             <div class="file-input-wrapper">
                 <label for="rpa-upload" class="file-label" id="rpa-label">Pilih File .rpa</label>
-                <input type="file" id="rpa-upload" accept=".rpa" onchange="updateLabel('rpa-upload', 'rpa-label')">
+                <input type="file" id="rpa-upload" accept=".rpa" onchange="tanganiFileTerpilih('rpa')">
             </div>
 
-            <button class="btn" id="btn-rpa" onclick="processFile('rpa-upload', 'rpa', 'rpa-progress', 'rpa-bar', 'rpa-message', 'btn-rpa', 'rpa-download-area')">Ekstrak Archive</button>
+            <button class="btn" id="btn-rpa" onclick="mulaiProses('rpa')">Ekstrak Archive</button>
 
             <div class="progress-container" id="rpa-progress"><div class="progress-bar" id="rpa-bar">0%</div></div>
-            <div class="alert-message" id="rpa-message"></div>
+            <div class="alert-message" id="rpa-msg"></div>
 
             <div class="download-area" id="rpa-download-area">
                 <p>✅ Ekstraksi Selesai!</p>
-                <button class="btn-download" id="rpa-download-btn">
-                    ⬇️ Download Hasil Ekstrak
+                <button class="btn-download" id="btn-dl-rpa" onclick="simulasiDownload('rpa')">
+                    ⬇️ Download File
                 </button>
             </div>
         </div>
@@ -262,138 +133,148 @@
         <div class="tool-card">
             <div class="tool-icon">📜</div>
             <h2>Unrpyc Decompiler</h2>
-            <p>Dekompilasi script dari format <strong>.rpyc</strong> kembali menjadi format <strong>.rpy</strong>.</p>
+            <p>Dekompilasi script <strong>.rpyc</strong> menjadi <strong>.rpy</strong>.</p>
             
             <div class="file-input-wrapper">
                 <label for="rpyc-upload" class="file-label" id="rpyc-label">Pilih File .rpyc</label>
-                <input type="file" id="rpyc-upload" accept=".rpyc" onchange="updateLabel('rpyc-upload', 'rpyc-label')">
+                <input type="file" id="rpyc-upload" accept=".rpyc" onchange="tanganiFileTerpilih('rpyc')">
             </div>
 
-            <button class="btn" id="btn-rpyc" onclick="processFile('rpyc-upload', 'rpyc', 'rpyc-progress', 'rpyc-bar', 'rpyc-message', 'btn-rpyc', 'rpyc-download-area')">Decompile Script</button>
+            <button class="btn" id="btn-rpyc" onclick="mulaiProses('rpyc')">Decompile Script</button>
 
             <div class="progress-container" id="rpyc-progress"><div class="progress-bar" id="rpyc-bar">0%</div></div>
-            <div class="alert-message" id="rpyc-message"></div>
+            <div class="alert-message" id="rpyc-msg"></div>
 
             <div class="download-area" id="rpyc-download-area">
                 <p>✅ Dekompilasi Selesai!</p>
-                <button class="btn-download" id="rpyc-download-btn">
-                    ⬇️ Download file.rpy
+                <button class="btn-download" id="btn-dl-rpyc" onclick="simulasiDownload('rpyc')">
+                    ⬇️ Download File
                 </button>
             </div>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 Ren'Py Tools Dashboard. (Mockup UI)
-    </footer>
+    <footer>&copy; 2026 Ren'Py Tools Dashboard.</footer>
 
     <script>
-        let intervals = {}; // Simpan proses agar tidak tumpang tindih
+        // Objek untuk menyimpan nama file yang sedang aktif agar tidak bocor jadi undefined
+        const dataFileAktif = {
+            rpa: { namaAsli: "", namaHasil: "" },
+            rpyc: { namaAsli: "", namaHasil: "" }
+        };
 
-        // Fungsi saat file dipilih
-        function updateLabel(inputId, labelId) {
-            const input = document.getElementById(inputId);
-            const label = document.getElementById(labelId);
+        let daftarInterval = {};
+
+        // Fungsi yang dipanggil saat user memilih file dari folder
+        function tanganiFileTerpilih(tipe) {
+            const inputElement = document.getElementById(`${tipe}-upload`);
+            const labelElement = document.getElementById(`${tipe}-label`);
             
-            if (input.files && input.files.length > 0) {
-                const fileName = input.files.name;
-                label.innerHTML = `File terpilih:<br><strong style="color: var(--primary);">${fileName}</strong>`;
-                label.style.borderColor = "var(--primary)";
+            // Cek apakah user benar-benar memilih file (tidak meng-cancel dialog)
+            if (inputElement && inputElement.files && inputElement.files.length > 0) {
+                // Ambil nama file dengan fallback aman
+                let namaFile = inputElement.files.name;
+                if (!namaFile || namaFile === "undefined") {
+                    namaFile = "file_tidak_diketahui." + tipe;
+                }
+
+                // Simpan ke memori global
+                dataFileAktif[tipe].namaAsli = namaFile;
+                
+                // Ubah tampilan label
+                labelElement.innerHTML = `File terpilih:<br><strong style="color: var(--primary);">${namaFile}</strong>`;
+                labelElement.style.borderColor = "var(--primary)";
             } else {
-                label.innerHTML = inputId.includes('rpa') ? "Pilih File .rpa" : "Pilih File .rpyc";
-                label.style.borderColor = "#555";
+                // Jika user batal memilih, reset semuanya
+                labelElement.innerHTML = `Pilih File .${tipe}`;
+                labelElement.style.borderColor = "#555";
+                dataFileAktif[tipe].namaAsli = ""; 
             }
         }
 
-        // Fungsi pesan error/sukses
-        function showMessage(msgId, text, isError) {
-            const msgBox = document.getElementById(msgId);
-            msgBox.style.display = "block";
-            msgBox.innerHTML = text;
-            msgBox.className = isError ? "alert-message alert-error" : "alert-message alert-success";
+        // Fungsi memunculkan notifikasi merah/hijau
+        function tampilkanPesan(tipe, teks, apakahError) {
+            const kotakPesan = document.getElementById(`${tipe}-msg`);
+            kotakPesan.style.display = "block";
+            kotakPesan.innerHTML = teks;
+            kotakPesan.className = apakahError ? "alert-message alert-error" : "alert-message alert-success";
         }
 
-        // Fungsi Pop-up Download
-        function simulasiDownload(namaFile) {
-            alert(`Mendownload file: ${namaFile} ...\n\n(Ini adalah simulasi klik download)`);
+        // Fungsi trigger klik tombol download
+        function simulasiDownload(tipe) {
+            const namaFileHasil = dataFileAktif[tipe].namaHasil || "hasil_download.zip";
+            alert(`Mendownload file: ${namaFileHasil}\n\n(Berhasil! Jika web sudah dihubungkan ke server Python, file asli akan terunduh.)`);
         }
 
-        // Fungsi Utama Proses
-        function processFile(inputId, expectedExt, progContainerId, progBarId, msgId, btnId, downloadAreaId) {
-            const fileInput = document.getElementById(inputId);
-            const msgBox = document.getElementById(msgId);
-            const progContainer = document.getElementById(progContainerId);
-            const progBar = document.getElementById(progBarId);
-            const btn = document.getElementById(btnId);
-            const downloadArea = document.getElementById(downloadAreaId);
+        // Fungsi inti saat tombol proses diklik
+        function mulaiProses(tipe) {
+            // Deklarasi elemen-elemen UI
+            const btnProses = document.getElementById(`btn-${tipe}`);
+            const areaProgress = document.getElementById(`${tipe}-progress`);
+            const barProgress = document.getElementById(`${tipe}-bar`);
+            const areaDownload = document.getElementById(`${tipe}-download-area`);
+            const btnDownload = document.getElementById(`btn-dl-${tipe}`);
+            const kotakPesan = document.getElementById(`${tipe}-msg`);
 
-            // 1. Reset tampilan awal
-            msgBox.style.display = "none";
-            progContainer.style.display = "none";
-            downloadArea.style.display = "none";
-            progBar.style.width = "0%";
-            progBar.innerHTML = "0%";
-            progBar.style.backgroundColor = "var(--primary)";
+            // 1. Reset tampilan
+            kotakPesan.style.display = "none";
+            areaProgress.style.display = "none";
+            areaDownload.style.display = "none";
+            barProgress.style.width = "0%";
+            barProgress.innerHTML = "0%";
+            barProgress.style.backgroundColor = "var(--primary)";
 
-            // 2. Cek apakah ada file
-            if (!fileInput.files || fileInput.files.length === 0) {
-                showMessage(msgId, "Error: Harap pilih file terlebih dahulu!", true);
+            // 2. Cek apakah nama file sudah tersimpan di memori
+            const namaAsli = dataFileAktif[tipe].namaAsli;
+            if (!namaAsli || namaAsli.trim() === "") {
+                tampilkanPesan(tipe, "Error: Harap pilih file terlebih dahulu!", true);
                 return;
             }
 
-            // Ambil nama file dari input
-            const fileName = fileInput.files.name;
-
-            // 3. Cek format file (Harus .rpa atau .rpyc)
-            if (!fileName.toLowerCase().endsWith(`.${expectedExt}`)) {
-                showMessage(msgId, `Error: Ekstensi file salah. Harap unggah file <strong>.${expectedExt}</strong>`, true);
+            // 3. Validasi Ekstensi
+            if (!namaAsli.toLowerCase().endsWith(`.${tipe}`)) {
+                tampilkanPesan(tipe, `Error: Ekstensi salah! Harap unggah file <strong>.${tipe}</strong>`, true);
                 return;
             }
 
-            // 4. Mulai Proses Simulasi
-            btn.disabled = true;
-            btn.innerHTML = "Memproses...";
-            progContainer.style.display = "block";
-            
+            // 4. Proses Ekstraksi / Dekompilasi Berjalan
+            btnProses.disabled = true;
+            btnProses.innerHTML = "Memproses...";
+            areaProgress.style.display = "block";
+
             let progress = 0;
-            if (intervals[inputId]) clearInterval(intervals[inputId]);
+            if (daftarInterval[tipe]) clearInterval(daftarInterval[tipe]);
 
-            intervals[inputId] = setInterval(() => {
-                progress += Math.floor(Math.random() * 20) + 10; // Tambah progress
+            daftarInterval[tipe] = setInterval(() => {
+                progress += 15; // Kecepatan loading
                 if (progress > 100) progress = 100;
                 
-                progBar.style.width = `${progress}%`;
-                progBar.innerHTML = `${progress}%`;
+                barProgress.style.width = `${progress}%`;
+                barProgress.innerHTML = `${progress}%`;
 
-                // 5. Sukses 100%
+                // 5. Jika selesai 100%
                 if (progress === 100) {
-                    clearInterval(intervals[inputId]);
-                    btn.disabled = false;
-                    btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
-                    progBar.style.backgroundColor = "var(--success-color)";
+                    clearInterval(daftarInterval[tipe]);
+                    btnProses.disabled = false;
+                    btnProses.innerHTML = tipe === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
+                    barProgress.style.backgroundColor = "var(--success-color)";
                     
-                    showMessage(msgId, `Berhasil memproses <strong>${fileName}</strong>!`, false);
-                    downloadArea.style.display = "flex";
+                    tampilkanPesan(tipe, `Berhasil memproses <strong>${namaAsli}</strong>!`, false);
+                    areaDownload.style.display = "flex";
 
-                    // Atur nama file di tombol download
-                    if (expectedExt === 'rpyc') {
-                        // Ubah nama .rpyc jadi .rpy
-                        const namaRpy = fileName.replace(/\.rpyc$/i, '.rpy');
-                        const rpycDownloadBtn = document.getElementById('rpyc-download-btn');
-                        
-                        rpycDownloadBtn.innerHTML = `⬇️ Download <strong>${namaRpy}</strong>`;
-                        rpycDownloadBtn.onclick = function() { simulasiDownload(namaRpy); };
+                    // Atur nama file hasil secara presisi
+                    if (tipe === 'rpyc') {
+                        // ganti ujung string .rpyc atau .RPYC menjadi .rpy
+                        dataFileAktif.rpyc.namaHasil = namaAsli.replace(/\.rpyc$/i, '.rpy');
+                        btnDownload.innerHTML = `⬇️ Download <strong>${dataFileAktif.rpyc.namaHasil}</strong>`;
                     } 
-                    else if (expectedExt === 'rpa') {
-                        // Ubah nama .rpa jadi .zip
-                        const namaZip = fileName.replace(/\.rpa$/i, '.zip');
-                        const rpaDownloadBtn = document.getElementById('rpa-download-btn');
-                        
-                        rpaDownloadBtn.innerHTML = `⬇️ Download <strong>${namaZip}</strong>`;
-                        rpaDownloadBtn.onclick = function() { simulasiDownload(namaZip); };
+                    else if (tipe === 'rpa') {
+                        // ganti ujung string .rpa atau .RPA menjadi .zip
+                        dataFileAktif.rpa.namaHasil = namaAsli.replace(/\.rpa$/i, '.zip');
+                        btnDownload.innerHTML = `⬇️ Download <strong>${dataFileAktif.rpa.namaHasil}</strong>`;
                     }
                 }
-            }, 300); // Kecepatan loading
+            }, 300);
         }
     </script>
 </body>
