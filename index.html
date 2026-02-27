@@ -66,12 +66,6 @@
             border: 1px solid #333;
         }
 
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
-            border-color: var(--primary);
-        }
-
         .tool-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
@@ -136,7 +130,7 @@
             cursor: not-allowed;
         }
 
-        /* Progress Bar Styles */
+        /* Progress Bar */
         .progress-container {
             width: 100%;
             background-color: #333;
@@ -159,7 +153,7 @@
             transition: width 0.3s ease;
         }
 
-        /* Alert Message Styles */
+        /* Alert Message */
         .alert-message {
             margin-top: 1rem;
             padding: 0.8rem;
@@ -179,6 +173,51 @@
             background-color: rgba(46, 204, 113, 0.2);
             color: var(--success-color);
             border: 1px solid var(--success-color);
+        }
+
+        /* Download Area Styles */
+        .download-area {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #1A251E;
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            display: none; /* Disembunyikan secara default */
+            flex-direction: column;
+            gap: 0.8rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .download-area p {
+            margin: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .btn-download {
+            background-color: var(--success-color);
+            color: #121212;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-download:hover {
+            background-color: #27AE60;
+            color: white;
         }
 
         footer {
@@ -203,18 +242,21 @@
             <p>Ekstrak aset game (gambar, audio, dll) dari file arsip <strong>.rpa</strong>.</p>
             
             <div class="file-input-wrapper">
-                <label for="rpa-upload" class="file-label" id="rpa-label">
-                    Pilih File .rpa
-                </label>
+                <label for="rpa-upload" class="file-label" id="rpa-label">Pilih File .rpa</label>
                 <input type="file" id="rpa-upload" accept=".rpa" onchange="updateLabel('rpa-upload', 'rpa-label')">
             </div>
 
-            <button class="btn" id="btn-rpa" onclick="processFile('rpa-upload', 'rpa', 'rpa-progress', 'rpa-bar', 'rpa-message', 'btn-rpa')">Ekstrak Archive</button>
+            <button class="btn" id="btn-rpa" onclick="processFile('rpa-upload', 'rpa', 'rpa-progress', 'rpa-bar', 'rpa-message', 'btn-rpa', 'rpa-download-area')">Ekstrak Archive</button>
 
-            <div class="progress-container" id="rpa-progress">
-                <div class="progress-bar" id="rpa-bar">0%</div>
-            </div>
+            <div class="progress-container" id="rpa-progress"><div class="progress-bar" id="rpa-bar">0%</div></div>
             <div class="alert-message" id="rpa-message"></div>
+
+            <div class="download-area" id="rpa-download-area">
+                <p>✅ Ekstraksi Selesai!</p>
+                <button class="btn-download" onclick="simulasiDownload('Hasil_Ekstrak.zip')">
+                    ⬇️ Download Hasil Ekstrak (.zip)
+                </button>
+            </div>
         </div>
 
         <div class="tool-card">
@@ -223,18 +265,21 @@
             <p>Dekompilasi script dari format <strong>.rpyc</strong> kembali menjadi format <strong>.rpy</strong>.</p>
             
             <div class="file-input-wrapper">
-                <label for="rpyc-upload" class="file-label" id="rpyc-label">
-                    Pilih File .rpyc
-                </label>
+                <label for="rpyc-upload" class="file-label" id="rpyc-label">Pilih File .rpyc</label>
                 <input type="file" id="rpyc-upload" accept=".rpyc" onchange="updateLabel('rpyc-upload', 'rpyc-label')">
             </div>
 
-            <button class="btn" id="btn-rpyc" onclick="processFile('rpyc-upload', 'rpyc', 'rpyc-progress', 'rpyc-bar', 'rpyc-message', 'btn-rpyc')">Decompile Script</button>
+            <button class="btn" id="btn-rpyc" onclick="processFile('rpyc-upload', 'rpyc', 'rpyc-progress', 'rpyc-bar', 'rpyc-message', 'btn-rpyc', 'rpyc-download-area')">Decompile Script</button>
 
-            <div class="progress-container" id="rpyc-progress">
-                <div class="progress-bar" id="rpyc-bar">0%</div>
-            </div>
+            <div class="progress-container" id="rpyc-progress"><div class="progress-bar" id="rpyc-bar">0%</div></div>
             <div class="alert-message" id="rpyc-message"></div>
+
+            <div class="download-area" id="rpyc-download-area">
+                <p>✅ Dekompilasi Selesai!</p>
+                <button class="btn-download" onclick="simulasiDownload(document.getElementById('rpyc-filename-display').innerText)">
+                    ⬇️ Download <span id="rpyc-filename-display" style="margin-left: 5px;">file.rpy</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -243,16 +288,14 @@
     </footer>
 
     <script>
-        // Variabel global untuk mencegah progress bar bertabrakan
-        let currentInterval = null; 
+        let intervals = {}; // Menyimpan interval per-kartu agar tidak bertabrakan
 
         function updateLabel(inputId, labelId) {
             const input = document.getElementById(inputId);
             const label = document.getElementById(labelId);
             
-            // Cek memastikan file benar-benar ada untuk mencegah undefined
             if (input && input.files && input.files.length > 0) {
-                const fileName = input.files[0].name || "File tidak diketahui";
+                const fileName = input.files.name || "File tidak diketahui";
                 label.innerHTML = `File terpilih:<br><strong>${fileName}</strong>`;
                 label.style.borderColor = "var(--primary)";
                 label.style.color = "var(--text-main)";
@@ -264,45 +307,49 @@
 
         function showMessage(msgId, text, isError) {
             const msgBox = document.getElementById(msgId);
-            if (!msgBox) return; // Mencegah error jika ID tidak ditemukan
-            
+            if (!msgBox) return;
             msgBox.style.display = "block";
             msgBox.innerHTML = text;
             msgBox.className = isError ? "alert-message alert-error" : "alert-message alert-success";
         }
 
-        function processFile(inputId, expectedExt, progContainerId, progBarId, msgId, btnId) {
+        function simulasiDownload(namaFile) {
+            alert(`Mendownload file: ${namaFile} ...\n\n(Ini hanya simulasi UI frontend. Di versi aslinya, ini akan memicu unduhan file dari servermu.)`);
+        }
+
+        function processFile(inputId, expectedExt, progContainerId, progBarId, msgId, btnId, downloadAreaId) {
             const fileInput = document.getElementById(inputId);
             const msgBox = document.getElementById(msgId);
             const progContainer = document.getElementById(progContainerId);
             const progBar = document.getElementById(progBarId);
             const btn = document.getElementById(btnId);
+            const downloadArea = document.getElementById(downloadAreaId);
 
-            // 1. Reset tampilan UI & Progress Bar
+            // 1. Reset tampilan
             if (msgBox) msgBox.style.display = "none";
             if (progContainer) progContainer.style.display = "none";
+            if (downloadArea) downloadArea.style.display = "none"; // Sembunyikan menu download saat mulai baru
             if (progBar) {
                 progBar.style.width = "0%";
                 progBar.innerHTML = "0%";
-                progBar.style.backgroundColor = "var(--primary)"; // Memastikan warna kembali biru
+                progBar.style.backgroundColor = "var(--primary)";
             }
 
-            // 2. Cek apakah file kosong atau tidak terbaca
+            // 2. Cek file
             if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
                 showMessage(msgId, "Error: Harap pilih file terlebih dahulu!", true);
                 return;
             }
 
-            const file = fileInput.files[0];
-            const fileName = file.name || "File_Tanpa_Nama";
+            const fileName = fileInput.files.name || "File_Tanpa_Nama";
 
-            // 3. Cek validasi ekstensi file
+            // 3. Cek validasi ekstensi
             if (!fileName.toLowerCase().endsWith(`.${expectedExt}`)) {
                 showMessage(msgId, `Error: Ekstensi file tidak valid. Harap gunakan file .${expectedExt}`, true);
                 return;
             }
 
-            // 4. Kunci tombol dan mulai simulasi
+            // 4. Kunci tombol dan jalankan simulasi
             if (btn) {
                 btn.disabled = true;
                 btn.innerHTML = "Memproses...";
@@ -310,10 +357,10 @@
             if (progContainer) progContainer.style.display = "block";
             
             let progress = 0;
-            if (currentInterval) clearInterval(currentInterval); // Hapus proses lama jika ada
+            if (intervals[inputId]) clearInterval(intervals[inputId]);
 
-            currentInterval = setInterval(() => {
-                progress += Math.floor(Math.random() * 15) + 5; 
+            intervals[inputId] = setInterval(() => {
+                progress += Math.floor(Math.random() * 20) + 10; 
                 if (progress > 100) progress = 100;
                 
                 if (progBar) {
@@ -321,34 +368,37 @@
                     progBar.innerHTML = `${progress}%`;
                 }
 
-                // Simulasi error acak (10% peluang gagal)
-                if (progress > 30 && progress < 80 && Math.random() < 0.1) {
-                    clearInterval(currentInterval);
+                // Peluang Error 10%
+                if (progress > 40 && progress < 80 && Math.random() < 0.1) {
+                    clearInterval(intervals[inputId]);
                     if (btn) {
                         btn.disabled = false;
                         btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
                     }
-                    showMessage(msgId, "Error Sistem: File korup atau proses terputus secara tidak terduga.", true);
+                    showMessage(msgId, "Error Sistem: File korup atau proses gagal.", true);
                     if (progBar) progBar.style.backgroundColor = "var(--error-color)";
                     return;
                 }
 
-                // Proses Sukses
+                // Sukses 100%
                 if (progress === 100) {
-                    clearInterval(currentInterval);
+                    clearInterval(intervals[inputId]);
                     if (btn) {
                         btn.disabled = false;
                         btn.innerHTML = expectedExt === 'rpa' ? "Ekstrak Archive" : "Decompile Script";
                     }
                     if (progBar) progBar.style.backgroundColor = "var(--success-color)";
                     
-                    const successMsg = expectedExt === 'rpa' 
-                        ? `Sukses mengekstrak <strong>${fileName}</strong>!` 
-                        : `Sukses mendekompilasi <strong>${fileName}</strong> menjadi file .rpy!`;
-                    
-                    showMessage(msgId, successMsg, false);
+                    // Tampilkan Menu Download
+                    if (downloadArea) downloadArea.style.display = "flex";
+
+                    // Ganti nama dari .rpyc ke .rpy untuk tombol download
+                    if (expectedExt === 'rpyc') {
+                        const namaRpy = fileName.replace(/\.rpyc$/i, '.rpy');
+                        document.getElementById('rpyc-filename-display').innerText = namaRpy;
+                    }
                 }
-            }, 400); 
+            }, 300); 
         }
     </script>
 </body>
